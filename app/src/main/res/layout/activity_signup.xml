@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/brand"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SignupActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@+id/guideline10">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/ic_logo" />
+
+                <TextView
+                    style="@style/Text.Title22px.Bold"
+                    android:textColor="@color/text_invert"
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carepoint" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.23" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_login_white"
+                android:orientation="vertical"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="35dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline14"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    style="@style/Text.Title22px.Medium"
+                    android:textColor="@color/text_primary"
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng ký" />
+
+                <LinearLayout
+                    android:layout_marginVertical="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Text.Body16px.Regular"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Họ tên" />
+
+                    <EditText
+                        style="@style/Text.Body16px.Regular"
+                        android:background="@drawable/textfield_normal"
+                        android:hint="Nhập tên của bạn"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        app:backgroundTint="@null"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/editTextText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text" />
+
+                    <TextView
+                        style="@style/Text.Caption14px.Regular"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/error"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <TextView
+                        style="@style/Text.Body16px.Regular"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại" />
+
+                    <EditText
+                        style="@style/Text.Body16px.Regular"
+                        android:background="@drawable/textfield_normal"
+                        android:hint="Nhập số điện thoại"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        app:backgroundTint="@null"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/editTextText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text" />
+
+                    <TextView
+                        style="@style/Text.Caption14px.Regular"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/error"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <TextView
+                        style="@style/Text.Body16px.Regular"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/textView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mật khẩu" />
+
+                    <EditText
+                        style="@style/Text.Body16px.Regular"
+                        android:background="@drawable/textfield_normal"
+                        android:hint="Mật khẩu mới"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        app:backgroundTint="@null"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/editTextTextPassword2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+
+                    <TextView
+                        style="@style/Text.Caption14px.Regular"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/error"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/textView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+
+                    <TextView
+                        style="@style/Text.Body16px.Regular"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/textView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nhập lại mật khẩu" />
+
+                    <EditText
+                        style="@style/Text.Body16px.Regular"
+                        android:background="@drawable/textfield_normal"
+                        android:hint="Nhập lại mật khẩu mới"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        app:backgroundTint="@null"
+                        android:layout_marginBottom="4dp"
+                        android:id="@+id/editTextTextPassword3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+
+                    <TextView
+                        style="@style/Text.Caption14px.Regular"
+                        android:paddingHorizontal="20dp"
+                        android:textColor="@color/error"
+                        android:id="@+id/textView22"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="TextView" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnSignup"
+                    style="@style/Text.Body18px.Medium"
+                    android:textColor="@color/spe_text_white"
+                    android:background="@drawable/default_primary_btn"
+                    app:backgroundTint="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng ký" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="45dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Text.Body16px.Regular"
+                        android:textColor="@color/text_secondary"
+                        android:id="@+id/textView23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hoặc đăng nhập bằng"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="25dp"
+                        android:id="@+id/imageView7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:srcCompat="@drawable/ic_google" />
+
+                    <LinearLayout
+                        android:layout_marginTop="75dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.Body16px.Regular"
+                            android:textColor="@color/text_secondary"
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:text="Bạn đã có tài khoản?" />
+
+                        <TextView
+                            style="@style/Text.Body16px.Medium"
+                            android:textColor="@color/accent"
+                            android:id="@+id/goToLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đăng nhập" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
