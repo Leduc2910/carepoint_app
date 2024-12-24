@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,8 +25,12 @@ import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.validation.CustomHorizontalDecoration
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.databinding.FragmentHomeBinding
+import com.hau.carepointtmdt.model.User
+import com.hau.carepointtmdt.validation.SharedPreferencesManager
 
 class HomeFragment : Fragment() {
+
+    private lateinit var currentUser : User;
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -88,6 +93,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val sharedPreferencesManager = SharedPreferencesManager(requireContext())
+        currentUser = sharedPreferencesManager.getUser()!!
+
+
         dataInitialize()
 
         val funcItemLayoutManager =
@@ -143,6 +153,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun dataInitialize() {
+
+        binding.txtTitleUserName.text = "Xin chào " + currentUser.name
 
         space2 = resources.getDimensionPixelSize(R.dimen.spacing_8dp)
         space = resources.getDimensionPixelSize(R.dimen.spacing_16dp)

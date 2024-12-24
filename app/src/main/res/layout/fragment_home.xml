@@ -61,11 +61,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView26"
+                            android:id="@+id/txtTitleUserName"
                             style="@style/Text.Title22px.Medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:text="Xin chào Diệu!"
                             android:textColor="@color/spe_text_white" />
 
@@ -83,7 +85,7 @@
                                 android:src="@drawable/ic_pin" />
 
                             <TextView
-                                android:id="@+id/textView27"
+                                android:id="@+id/txtHomeUserAddress"
                                 style="@style/Text.Caption14px.Medium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

@@ -10,6 +10,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -35,10 +36,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:gravity="center"
                 app:layout_constraintTop_toTopOf="@+id/guideline10">
 
                 <ImageView
@@ -49,12 +50,12 @@
                     app:srcCompat="@drawable/ic_logo" />
 
                 <TextView
-                    style="@style/Text.Title22px.Bold"
-                    android:textColor="@color/text_invert"
                     android:id="@+id/textView12"
+                    style="@style/Text.Title22px.Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Carepoint" />
+                    android:text="Carepoint"
+                    android:textColor="@color/text_invert" />
 
             </LinearLayout>
 
@@ -79,43 +80,43 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <TextView
-                    style="@style/Text.Title22px.Medium"
-                    android:textColor="@color/text_primary"
                     android:id="@+id/textView14"
+                    style="@style/Text.Title22px.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đăng ký" />
+                    android:text="Đăng ký"
+                    android:textColor="@color/text_primary" />
 
                 <LinearLayout
-                    android:layout_marginVertical="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginVertical="30dp"
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Text.Body16px.Regular"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="20dp"
                         android:id="@+id/textView15"
+                        style="@style/Text.Body16px.Regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Họ tên" />
+                        android:layout_marginBottom="20dp"
+                        android:text="Họ tên"
+                        android:textColor="@color/text_primary" />
 
                     <EditText
+                        android:id="@+id/edtNameRegis"
                         style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:background="@drawable/textfield_normal"
+                        android:ems="10"
                         android:hint="Nhập tên của bạn"
+                        android:inputType="text"
                         android:paddingHorizontal="20sp"
                         android:paddingVertical="10dp"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        app:backgroundTint="@null"
-                        android:layout_marginBottom="4dp"
-                        android:id="@+id/edtNameRegis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="text" />
+                        app:backgroundTint="@null" />
 
                     <TextView
                         android:id="@+id/txtErrorNameRes"
@@ -129,29 +130,29 @@
                         android:visibility="gone" />
 
                     <TextView
-                        style="@style/Text.Body16px.Regular"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="20dp"
                         android:id="@+id/textView17"
+                        style="@style/Text.Body16px.Regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại" />
+                        android:layout_marginBottom="20dp"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/text_primary" />
 
                     <EditText
+                        android:id="@+id/edtPhoneRegis"
                         style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:background="@drawable/textfield_normal"
+                        android:ems="10"
                         android:hint="Nhập số điện thoại"
+                        android:inputType="text"
                         android:paddingHorizontal="20sp"
                         android:paddingVertical="10dp"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        app:backgroundTint="@null"
-                        android:layout_marginBottom="4dp"
-                        android:id="@+id/edtPhoneRegis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="text" />
+                        app:backgroundTint="@null" />
 
                     <TextView
                         android:id="@+id/txtErrorPhoneRegis"
@@ -165,29 +166,29 @@
                         android:visibility="gone" />
 
                     <TextView
-                        style="@style/Text.Body16px.Regular"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="20dp"
                         android:id="@+id/textView20"
+                        style="@style/Text.Body16px.Regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mật khẩu" />
+                        android:layout_marginBottom="20dp"
+                        android:text="Mật khẩu"
+                        android:textColor="@color/text_primary" />
 
                     <EditText
+                        android:id="@+id/edtPassRegis"
                         style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:background="@drawable/textfield_normal"
+                        android:ems="10"
                         android:hint="Mật khẩu mới"
+                        android:inputType="textPassword"
                         android:paddingHorizontal="20sp"
                         android:paddingVertical="10dp"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        app:backgroundTint="@null"
-                        android:layout_marginBottom="4dp"
-                        android:id="@+id/edtPassRegis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPassword" />
+                        app:backgroundTint="@null" />
 
                     <TextView
                         android:id="@+id/txtErrorPassRegis"
@@ -201,29 +202,29 @@
                         android:visibility="gone" />
 
                     <TextView
-                        style="@style/Text.Body16px.Regular"
-                        android:textColor="@color/text_primary"
-                        android:layout_marginBottom="20dp"
                         android:id="@+id/textView21"
+                        style="@style/Text.Body16px.Regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nhập lại mật khẩu" />
+                        android:layout_marginBottom="20dp"
+                        android:text="Nhập lại mật khẩu"
+                        android:textColor="@color/text_primary" />
 
                     <EditText
+                        android:id="@+id/edtConfirmPassRegis"
                         style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:background="@drawable/textfield_normal"
+                        android:ems="10"
                         android:hint="Nhập lại mật khẩu mới"
+                        android:inputType="textPassword"
                         android:paddingHorizontal="20sp"
                         android:paddingVertical="10dp"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_secondary"
-                        app:backgroundTint="@null"
-                        android:layout_marginBottom="4dp"
-                        android:id="@+id/edtConfirmPassRegis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPassword" />
+                        app:backgroundTint="@null" />
 
                     <TextView
                         android:id="@+id/txtErrorConPassRegis"
@@ -239,12 +240,12 @@
                 <Button
                     android:id="@+id/btnSignup"
                     style="@style/Text.Body18px.Medium"
-                    android:textColor="@color/spe_text_white"
-                    android:background="@drawable/default_primary_btn"
-                    app:backgroundTint="@null"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Đăng ký" />
+                    android:background="@drawable/default_primary_btn"
+                    android:text="Đăng ký"
+                    android:textColor="@color/spe_text_white"
+                    app:backgroundTint="@null" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -253,48 +254,72 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Text.Body16px.Regular"
-                        android:textColor="@color/text_secondary"
                         android:id="@+id/textView23"
+                        style="@style/Text.Body16px.Regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Hoặc đăng nhập bằng"
-                        android:gravity="center"/>
+                        android:textColor="@color/text_secondary" />
 
                     <ImageView
-                        android:layout_gravity="center"
-                        android:layout_marginTop="25dp"
                         android:id="@+id/imageView7"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="25dp"
                         app:srcCompat="@drawable/ic_google" />
 
                     <LinearLayout
-                        android:layout_marginTop="75dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="75dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/Text.Body16px.Regular"
-                            android:textColor="@color/text_secondary"
                             android:id="@+id/textView24"
+                            style="@style/Text.Body16px.Regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="5dp"
-                            android:text="Bạn đã có tài khoản?" />
+                            android:text="Bạn đã có tài khoản?"
+                            android:textColor="@color/text_secondary" />
 
                         <TextView
-                            style="@style/Text.Body16px.Medium"
-                            android:textColor="@color/accent"
                             android:id="@+id/goToLogin"
+                            style="@style/Text.Body16px.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Đăng nhập" />
+                            android:text="Đăng nhập"
+                            android:textColor="@color/accent" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/viewWhiteOverlay2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBarRegister"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/brand"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

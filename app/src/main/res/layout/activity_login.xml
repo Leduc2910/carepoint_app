@@ -307,7 +307,6 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/spe_bg_white"
         android:indeterminate="true"
         android:indeterminateTint="@color/brand"
         android:visibility="gone"

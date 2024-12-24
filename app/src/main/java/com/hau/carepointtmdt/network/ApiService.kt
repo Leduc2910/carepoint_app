@@ -13,6 +13,6 @@ interface ApiService {
     @POST("login.php")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @POST("login.php")
+    @POST("register.php")
     suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
 }

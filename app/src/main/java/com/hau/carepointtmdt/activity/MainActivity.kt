@@ -1,6 +1,7 @@
 package com.hau.carepointtmdt.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import com.hau.carepointtmdt.fragment.CartFragment
 import com.hau.carepointtmdt.fragment.HomeFragment
 import com.hau.carepointtmdt.fragment.MedicineFragment
 import com.hau.carepointtmdt.fragment.ProfileFragment
+import com.hau.carepointtmdt.validation.SharedPreferencesManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     private fun replaceMainFragment(fragment: Fragment) {

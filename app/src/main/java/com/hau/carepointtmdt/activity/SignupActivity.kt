@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.hau.carepointtmdt.databinding.ActivitySignupBinding
 import com.hau.carepointtmdt.validation.ValidateData
+import com.hau.carepointtmdt.viewmodel.RegisterState
 import com.hau.carepointtmdt.viewmodel.RegisterViewModel
 
 class SignupActivity : AppCompatActivity() {
@@ -43,7 +45,9 @@ class SignupActivity : AppCompatActivity() {
             }
         })
 
-        binding.btnSignup.setOnClickListener(View.OnClickListener {
+        setupObservers()
+
+        binding.btnSignup.setOnClickListener {
             hideTextError()
 
             val name = binding.edtNameRegis.text.toString().trim()
@@ -89,15 +93,45 @@ class SignupActivity : AppCompatActivity() {
             }
 
             if (hasError)
-                return@OnClickListener
+                return@setOnClickListener
 
-        })
+            viewModel.register(name, phoneNumber, password)
+        }
 
         binding.goToLogin.setOnClickListener(View.OnClickListener {
             val loginActivity = Intent(applicationContext, LoginActivity::class.java)
             startActivity(loginActivity)
             finish()
         })
+    }
+
+    private fun setupObservers() {
+        viewModel.registerState.observe(this) { state ->
+            when (state) {
+                is RegisterState.Loading -> {
+                    binding.viewWhiteOverlay2.visibility = View.VISIBLE
+                    binding.progressBarRegister.visibility = View.VISIBLE
+                    binding.btnSignup.isEnabled = false
+                }
+                is RegisterState.Success -> {
+                    binding.viewWhiteOverlay2.visibility = View.GONE
+                    binding.progressBarRegister.visibility = View.GONE
+                    binding.btnSignup.isEnabled = true
+
+                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    val loginActivity = Intent(this, LoginActivity::class.java)
+                    startActivity(loginActivity)
+                    finish()
+                }
+                is RegisterState.Error -> {
+                    binding.viewWhiteOverlay2.visibility = View.GONE
+                    binding.progressBarRegister.visibility = View.GONE
+                    binding.btnSignup.isEnabled = true
+                    binding.txtErrorPhoneRegis.visibility = View.VISIBLE
+                    binding.txtErrorPhoneRegis.text = state.message
+                }
+            }
+        }
     }
 
     private fun hideKeyboard(view: View) {

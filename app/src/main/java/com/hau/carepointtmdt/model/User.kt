@@ -3,7 +3,7 @@ package com.hau.carepointtmdt.model
 import java.util.Date
 
 data class User (
-    val id: Int,
+    val user_id: Int,
     val name : String,
     val phoneNumber: String,
     val password: String,

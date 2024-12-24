@@ -2,6 +2,7 @@ package com.hau.carepointtmdt.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
@@ -10,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.hau.carepointtmdt.databinding.ActivityLoginBinding
+import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.viewmodel.LoginState
 import com.hau.carepointtmdt.viewmodel.LoginViewModel
 
@@ -83,6 +85,11 @@ class LoginActivity : AppCompatActivity() {
                     binding.btnLogin.isEnabled = true
 
                     Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
+
+                    val sharedPreferencesManager = SharedPreferencesManager(this)
+                    state.user?.let { sharedPreferencesManager.saveUser(it) }
+                    Log.d("user", sharedPreferencesManager.getUser().toString())
+
                     val mainActivity = Intent(this, MainActivity::class.java)
                     startActivity(mainActivity)
                     finish()
