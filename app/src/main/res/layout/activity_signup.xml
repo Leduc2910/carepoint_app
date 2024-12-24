@@ -21,7 +21,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline10"
@@ -109,21 +111,22 @@
                         android:textColorHint="@color/text_secondary"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/editTextText2"
+                        android:id="@+id/edtNameRegis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text" />
 
                     <TextView
+                        android:id="@+id/txtErrorNameRes"
                         style="@style/Text.Caption14px.Regular"
-                        android:paddingHorizontal="20dp"
-                        android:textColor="@color/error"
-                        android:layout_marginBottom="30dp"
-                        android:id="@+id/textView16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginBottom="30dp"
+                        android:paddingHorizontal="20dp"
+                        android:text="TextView"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
 
                     <TextView
                         style="@style/Text.Body16px.Regular"
@@ -144,21 +147,22 @@
                         android:textColorHint="@color/text_secondary"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/editTextText3"
+                        android:id="@+id/edtPhoneRegis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text" />
 
                     <TextView
+                        android:id="@+id/txtErrorPhoneRegis"
                         style="@style/Text.Caption14px.Regular"
-                        android:paddingHorizontal="20dp"
-                        android:textColor="@color/error"
-                        android:layout_marginBottom="30dp"
-                        android:id="@+id/textView18"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginBottom="30dp"
+                        android:paddingHorizontal="20dp"
+                        android:text="TextView"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
 
                     <TextView
                         style="@style/Text.Body16px.Regular"
@@ -179,21 +183,22 @@
                         android:textColorHint="@color/text_secondary"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/editTextTextPassword2"
+                        android:id="@+id/edtPassRegis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPassword" />
 
                     <TextView
+                        android:id="@+id/txtErrorPassRegis"
                         style="@style/Text.Caption14px.Regular"
-                        android:paddingHorizontal="20dp"
-                        android:textColor="@color/error"
-                        android:layout_marginBottom="30dp"
-                        android:id="@+id/textView19"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:layout_marginBottom="30dp"
+                        android:paddingHorizontal="20dp"
+                        android:text="TextView"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
 
                     <TextView
                         style="@style/Text.Body16px.Regular"
@@ -214,20 +219,21 @@
                         android:textColorHint="@color/text_secondary"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="4dp"
-                        android:id="@+id/editTextTextPassword3"
+                        android:id="@+id/edtConfirmPassRegis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPassword" />
 
                     <TextView
+                        android:id="@+id/txtErrorConPassRegis"
                         style="@style/Text.Caption14px.Regular"
-                        android:paddingHorizontal="20dp"
-                        android:textColor="@color/error"
-                        android:id="@+id/textView22"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:paddingHorizontal="20dp"
+                        android:text="TextView"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <Button

@@ -36,6 +36,7 @@ class LoginViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _loginState.value = LoginState.Error("Đã xảy ra lỗi: ${e.message}")
+                Log.d("error", e.message.toString())
             }
         }
     }

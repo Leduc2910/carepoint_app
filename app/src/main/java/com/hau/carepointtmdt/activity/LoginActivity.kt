@@ -3,11 +3,12 @@ package com.hau.carepointtmdt.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.hau.carepointtmdt.databinding.ActivityLoginBinding
 import com.hau.carepointtmdt.viewmodel.LoginState
 import com.hau.carepointtmdt.viewmodel.LoginViewModel
@@ -29,19 +30,40 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.edtPhoneLogin.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
+            if (!b) {
+                hideKeyboard(view)
+            }
+        })
+        binding.edtPassLogin.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
+            if (!b) {
+                hideKeyboard(view)
+            }
+        })
+
         setupObservers()
 
         binding.btnLogin.setOnClickListener {
+            hideTextError()
             val phoneNumber = binding.edtPhoneLogin.text.toString().trim()
             val password = binding.edtPassLogin.text.toString().trim()
 
-            if (phoneNumber.isEmpty() || password.isEmpty()) {
+            var hasError = false
+
+            if (phoneNumber.isEmpty()) {
                 binding.txtErrorPhoneLogin.visibility = View.VISIBLE
-                binding.txtErrorPassLogin.visibility = View.VISIBLE
                 binding.txtErrorPhoneLogin.text = "Vui lòng nhập số điện thoại!"
-                binding.txtErrorPassLogin.text = "Vui lòng nhập mật khẩu!"
-                return@setOnClickListener
+                hasError = true
+
             }
+            if (password.isEmpty()) {
+                binding.txtErrorPassLogin.visibility = View.VISIBLE
+                binding.txtErrorPassLogin.text = "Vui lòng nhập mật khẩu!"
+                hasError = true
+            }
+
+            if (hasError)
+                return@setOnClickListener
 
             viewModel.login(phoneNumber, password)
         }
@@ -76,5 +98,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    private fun hideTextError() {
+        binding.txtErrorPhoneLogin.visibility = View.GONE
+        binding.txtErrorPassLogin.visibility = View.GONE
     }
 }
