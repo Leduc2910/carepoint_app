@@ -8,11 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.hau.carepointtmdt.activity.ActivityPurchaseOrder
 import com.hau.carepointtmdt.activity.ChangePassActivity
+import com.hau.carepointtmdt.activity.EditInformationActivity
 import com.hau.carepointtmdt.activity.LoginActivity
 import com.hau.carepointtmdt.databinding.FragmentProfileBinding
+import com.hau.carepointtmdt.model.User
+import com.hau.carepointtmdt.validation.SharedPreferencesManager
+import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var currentUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,17 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val sharedPreferences = SharedPreferencesManager(requireContext())
+        currentUser = sharedPreferences.getUser()!!
+
+        dataInitialize()
+
+        binding.btnEditInformation.setOnClickListener {
+            val editInformationActivity =
+                Intent(requireContext(), EditInformationActivity::class.java)
+            startActivity(editInformationActivity)
+        }
+
         binding.btnEditPass.setOnClickListener(View.OnClickListener {
             val editPassActivity = Intent(requireContext(), ChangePassActivity::class.java)
             startActivity(editPassActivity)
@@ -45,5 +61,14 @@ class ProfileFragment : Fragment() {
             val purchaseOrderActivit = Intent(requireContext(), ActivityPurchaseOrder::class.java)
             startActivity(purchaseOrderActivit)
         })
+    }
+
+    private fun dataInitialize() {
+
+        val avatarUrl = currentUser.avatar
+        Picasso.get().load(avatarUrl).into(binding.imgProAva)
+        binding.txtNamePro.text = currentUser.name
+        binding.txtPhonePro.text = currentUser.phoneNumber
+
     }
 }

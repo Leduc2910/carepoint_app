@@ -8,9 +8,8 @@ data class User (
     val phoneNumber: String,
     val password: String,
     val avatar : String,
-    val email : String,
     val gender : Int,
-    val birthday : Date,
+    val birthday : String,
     val role_id: Int,
     val create_at : Date
 )

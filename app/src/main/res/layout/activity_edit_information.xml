@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    tools:context=".activity.EditInformationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_topnav"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="64dp"
+                android:paddingBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnBackToProfile2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleX="-1"
+                    app:srcCompat="@drawable/ic_rightarrow"
+                    app:tint="@color/text_invert" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/Text.Body18px.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Thông tin cá nhân"
+                    android:textColor="@color/text_invert"
+                    android:enabled="false"/>
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:tint="@color/text_invert"
+                    app:srcCompat="@drawable/ic_edit" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="500dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/imgAvatarUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        tools:srcCompat="@tools:sample/avatars" />
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/imageView37"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginStart="25dp"
+                    app:srcCompat="@drawable/ic_camera" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Họ tên"
+                        android:textColor="@color/text_primary" />
+
+                    <EditText
+                        android:enabled="false"
+                        android:id="@+id/edtUserName"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textfield_normal"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:text="Tran Huy Chien"
+                        android:textColor="@color/text_secondary"
+                        app:backgroundTint="@null" />
+
+                    <TextView
+
+                        android:id="@+id/txtErrorNameInfo"
+                        style="@style/Text.Caption14px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingHorizontal="15dp"
+                        android:text="Sai định dạng số điện thoại"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Số điện thoại"
+                        android:textColor="@color/text_primary" />
+
+                    <EditText
+                        android:id="@+id/edtUserPhone"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textfield_normal"
+                        android:ems="10"
+                        android:enabled="false"
+                        android:inputType="text"
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:text="0123456788"
+                        android:textColor="@color/text_secondary"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Giới tính"
+                        android:textColor="@color/text_primary" />
+
+                    <RadioGroup
+                        android:id="@+id/rdGrGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rdMale"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:paddingStart="10dp"
+                            android:text="Nam"
+                            app:buttonTint="@color/brand" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rdFemale"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:paddingStart="10dp"
+                            android:text="Nữ"
+                            app:buttonTint="@color/brand" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rdOther"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:enabled="false"
+                            android:paddingStart="10dp"
+                            android:text="Khác"
+                            app:buttonTint="@color/brand" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/txtErrorGenderInfo"
+                        style="@style/Text.Caption14px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingHorizontal="15dp"
+                        android:text="Sai định dạng số điện thoại"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        style="@style/Text.Body16px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Ngày sinh"
+                        android:textColor="@color/text_primary" />
+
+                    <LinearLayout
+                        android:paddingHorizontal="20sp"
+                        android:paddingVertical="10dp"
+                        android:gravity="center"
+                        android:background="@drawable/textfield_normal"
+                        style="@style/Text.Body16px.Regular"
+                        android:id="@+id/slBirthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.Body16px.Regular"
+                            android:textColor="@color/text_primary"
+                            android:id="@+id/txtBirthday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="--- Chọn ngày sinh ---" />
+
+                        <ImageView
+                            android:id="@+id/imageView38"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:tint="@color/text_secondary"
+                            app:srcCompat="@drawable/ic_calender" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtErrorBirthdayInfo"
+                        style="@style/Text.Caption14px.Regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingHorizontal="15dp"
+                        android:text="Sai định dạng số điện thoại"
+                        android:textColor="@color/error"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnEditSave"
+                style="@style/Text.Body18px.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/default_primary_btn"
+                android:text="Lưu"
+                android:textColor="@color/text_invert"
+                app:backgroundTint="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout19" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/viewWhiteOverlay3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spe_bg_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/prgBarUpdateInfo"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/brand"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

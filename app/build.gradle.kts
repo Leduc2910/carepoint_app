@@ -34,7 +34,6 @@ android {
         jvmTarget = "1.8"
     }
 
-    // view binding
     buildFeatures {
         viewBinding = true
     }
@@ -55,11 +54,18 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    // room database
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
 
+    // retrofit && json
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+
+    implementation (libs.cloudinary.android.v302)
+
+    // picasso
+    implementation(libs.picasso)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)

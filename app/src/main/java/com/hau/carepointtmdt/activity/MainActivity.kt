@@ -21,7 +21,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceMainFragment(HomeFragment())
+        val navigateTo = intent.getStringExtra("navigateTo")
+        if (navigateTo == "ProfileFragment") {
+            replaceMainFragment(ProfileFragment())
+        } else {
+            replaceMainFragment(HomeFragment())
+        }
 
         binding.bottomNavMain.setOnItemSelectedListener {
             when (it.itemId) {

@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.hau.carepointtmdt.model.OnboardItem
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityOnboardBinding
+import com.hau.carepointtmdt.network.CloudinaryConfig
 
 class OnboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnboardBinding
@@ -19,10 +20,24 @@ class OnboardActivity : AppCompatActivity() {
     private lateinit var onboardItemList: MutableList<OnboardItem>
 
     private var position: Int = 0
+    private var isInitCloudinary = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        if (!isInitCloudinary) {
+            CloudinaryConfig.initializeCloudinary(this)
+            isInitCloudinary = true
+        }
+
+        if (restorePrefData()) {
+            val loginActivity = Intent(this, LoginActivity::class.java)
+            startActivity(loginActivity)
+            finish()
+            return
+        }
+
         binding = ActivityOnboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,7 +80,6 @@ class OnboardActivity : AppCompatActivity() {
                 }
             }
         })
-
 
         TabLayoutMediator(
             binding.onboardIndicator, binding.screenViewpager
