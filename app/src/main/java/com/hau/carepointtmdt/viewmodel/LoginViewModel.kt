@@ -22,7 +22,6 @@ class LoginViewModel : ViewModel() {
             _loginState.value = LoginState.Loading
             try {
                 val response = userRepository.login(phoneNumber, password)
-                Log.d("response", userRepository.login(phoneNumber, password).body().toString())
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()!!
 

@@ -1,9 +1,11 @@
 package com.hau.carepointtmdt.repository
 
 import com.hau.carepointtmdt.network.RetrofitInstance
+import com.hau.carepointtmdt.request.ChangePassRequest
 import com.hau.carepointtmdt.request.LoginRequest
 import com.hau.carepointtmdt.request.RegisterRequest
 import com.hau.carepointtmdt.request.UpdateInfoUserRequest
+import com.hau.carepointtmdt.response.ChangePassResponse
 import com.hau.carepointtmdt.response.LoginResponse
 import com.hau.carepointtmdt.response.RegisterResponse
 import com.hau.carepointtmdt.response.UpdateInfoUserResponse
@@ -34,5 +36,14 @@ class UserRepository {
     ): Response<UpdateInfoUserResponse> {
         val request = UpdateInfoUserRequest(name, gender, birthday, avatar, user_id)
         return RetrofitInstance.instance.updateInfoUser(request)
+    }
+
+    suspend fun changePass(
+        user_id: Int,
+        old_pass: String,
+        new_pass: String
+    ): Response<ChangePassResponse> {
+        val request = ChangePassRequest(user_id, old_pass, new_pass)
+        return RetrofitInstance.instance.changePass(request)
     }
 }

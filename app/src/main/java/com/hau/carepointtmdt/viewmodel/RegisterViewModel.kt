@@ -1,7 +1,6 @@
 package com.hau.carepointtmdt.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +21,6 @@ class RegisterViewModel: ViewModel() {
                 val response = userRepository.register(name, phoneNumber, password)
                 if (response.isSuccessful && response.body() != null) {
                     val registerResponse = response.body()!!
-                    Log.d("response", registerResponse.toString())
                     if (!registerResponse.error) {
                         _registerState.value = RegisterState.Success(registerResponse.message)
                     } else {
