@@ -134,7 +134,6 @@ class EditInformationActivity : AppCompatActivity() {
             if (hasError)
                 return@setOnClickListener
 
-            // Check if the image has been selected, if not, skip image upload
             if (::imgPath.isInitialized) {
                 MediaManager.get().upload(imgPath).callback(object : UploadCallback {
                     override fun onStart(requestId: String) {

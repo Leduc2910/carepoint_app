@@ -33,12 +33,7 @@ class UpdateInfoUserViewModel : ViewModel() {
                         _updateInfoUserState.value =
                             UpdateInfoUserState.Error(updateInfoUserResponse.result.message)
                     }
-                    } else {
-                    _updateInfoUserState.value =
-                        UpdateInfoUserState.Error("Cập nhật thông tin thất bại. Vui lòng thử lại.")
-
                 }
-
             } catch (e: Exception) {
                 _updateInfoUserState.value =
                     UpdateInfoUserState.Error("Đã xảy ra lỗi: ${e.message}")

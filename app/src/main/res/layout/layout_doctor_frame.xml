@@ -88,7 +88,7 @@
                         app:srcCompat="@drawable/ic_pin_solid" />
 
                     <TextView
-                        android:id="@+id/textView40"
+                        android:id="@+id/txtDetailDosage"
                         style="@style/Text.Caption12px.Regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

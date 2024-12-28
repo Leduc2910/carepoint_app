@@ -1,24 +1,24 @@
 package com.hau.carepointtmdt.fragment
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.hau.carepointtmdt.adapter.HomeBlogItemRV
 import com.hau.carepointtmdt.adapter.HomeDoctorItemRV
 import com.hau.carepointtmdt.adapter.HomeFunctionItemRecycleView
-import com.hau.carepointtmdt.adapter.HomeMedItemRV
+import com.hau.carepointtmdt.adapter.MedItemRV
 import com.hau.carepointtmdt.adapter.HomeQuickTestRV
 import com.hau.carepointtmdt.adapter.HomeSpecialtyItemRV
 import com.hau.carepointtmdt.model.HomeBlogItem
 import com.hau.carepointtmdt.model.HomeDoctorItem
 import com.hau.carepointtmdt.model.HomeFuncItem
-import com.hau.carepointtmdt.model.HomeMedCategory
-import com.hau.carepointtmdt.model.HomeMedItem
 import com.hau.carepointtmdt.model.HomeSpecialtyItem
 import com.hau.carepointtmdt.model.HomeQuickTestItem
 import com.hau.carepointtmdt.R
@@ -27,27 +27,30 @@ import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.databinding.FragmentHomeBinding
 import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
+import com.hau.carepointtmdt.viewmodel.GetAllCatalogueState
+import com.hau.carepointtmdt.viewmodel.GetProductByCatalogueIdState
+import com.hau.carepointtmdt.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var currentUser : User;
+    private lateinit var currentUser: User
 
     private lateinit var binding: FragmentHomeBinding
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var homeFunctionAdapter: HomeFunctionItemRecycleView
     private lateinit var homeSpecialtyAdapter: HomeSpecialtyItemRV
     private lateinit var homeDoctorAdapter: HomeDoctorItemRV
     private lateinit var homeQuickTestRV: HomeQuickTestRV
     private lateinit var homeBlogAdapter: HomeBlogItemRV
-    private lateinit var homeMedIAdapter: HomeMedItemRV
+    private lateinit var homeMedIAdapter: MedItemRV
 
     private lateinit var homeFuncItemLst: ArrayList<HomeFuncItem>
     private lateinit var specialtyItemLst: ArrayList<HomeSpecialtyItem>
     private lateinit var homeDoctorItemLst: ArrayList<HomeDoctorItem>
     private lateinit var homeQuickTestLst: ArrayList<HomeQuickTestItem>
     private lateinit var homeBlogItemLst: ArrayList<HomeBlogItem>
-    private lateinit var homeMedItemLst: ArrayList<HomeMedItem>
-    private lateinit var homeMedCategoryLst: ArrayList<HomeMedCategory>
 
     var space: Int = 0
     var space2: Int = 0
@@ -71,13 +74,6 @@ class HomeFragment : Fragment() {
     lateinit var txtBlogCate: Array<String>
     lateinit var txtBlogTitle: Array<String>
     lateinit var txtBlogDes: Array<String>
-
-    lateinit var imgMedID: Array<Int>
-    lateinit var txtMedName: Array<String>
-    lateinit var txtMedPrice: Array<String>
-    lateinit var txtMedUnit: Array<String>
-
-    lateinit var cateMedName : Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,25 +128,94 @@ class HomeFragment : Fragment() {
         homeBlogAdapter = HomeBlogItemRV(requireContext(), homeBlogItemLst)
         binding.rvBlogHome.adapter = homeBlogAdapter
 
-        homeMedCategoryLst.forEach { category ->
-            val tab = binding.tblCateMed.newTab()
-            tab.text = category.cateName
-            binding.tblCateMed.addTab(tab)
-        }
-
-        for (i in 0 until binding.tblCateMed.tabCount) {
-            val tab = (binding.tblCateMed.getChildAt(0) as ViewGroup).getChildAt(i)
-            val layoutParams = tab.layoutParams as ViewGroup.MarginLayoutParams
-            layoutParams.marginEnd = 20
-            tab.layoutParams = layoutParams
-        }
-
-        val medItemLayoutManager = GridLayoutManager(requireContext(), 2)
-        binding.rvMedHome.layoutManager = medItemLayoutManager
-        homeMedIAdapter = HomeMedItemRV(requireContext(), homeMedItemLst)
-        binding.rvMedHome.adapter = homeMedIAdapter
+        setupObserversCatalogueLst()
+        setupObserversMedicineLst()
+        homeViewModel.getAllCatalogue()
 
     }
+
+    private fun setupObserversCatalogueLst() {
+        homeViewModel.getAllCatalogueState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is GetAllCatalogueState.Loading -> {
+                    binding.tblCateMed.visibility = View.GONE
+                    binding.tblCateMed.removeAllTabs()
+                }
+
+                is GetAllCatalogueState.Success -> {
+                    binding.tblCateMed.visibility = View.VISIBLE
+                    binding.tblCateMed.removeAllTabs()
+
+                    val homeMedCatalogueLst = state.catalogueLst
+                    Log.d("Catalogue lst", homeMedCatalogueLst.toString())
+                    homeMedCatalogueLst.forEach { category ->
+                        val tab = binding.tblCateMed.newTab()
+                        tab.text = category.pCatalogue_name
+                        tab.tag = category.pCatalogue_id
+                        binding.tblCateMed.addTab(tab)
+                    }
+
+                    for (i in 0 until binding.tblCateMed.tabCount) {
+                        val tab = (binding.tblCateMed.getChildAt(0) as ViewGroup).getChildAt(i)
+                        val layoutParams = tab.layoutParams as ViewGroup.MarginLayoutParams
+                        layoutParams.marginEnd = 20
+                        tab.layoutParams = layoutParams
+                    }
+
+                    homeViewModel.getProductByCatalogueId(homeMedCatalogueLst[0].pCatalogue_id)
+
+                    binding.tblCateMed.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                        override fun onTabSelected(tab: TabLayout.Tab?) {
+                            val catalogueId = tab?.tag as? Int
+                            if (catalogueId != null) {
+                                homeViewModel.getProductByCatalogueId(catalogueId)
+                            }
+                        }
+
+                        override fun onTabUnselected(tab: TabLayout.Tab?) {
+                        }
+
+                        override fun onTabReselected(tab: TabLayout.Tab?) {
+                        }
+                    })
+                }
+
+                is GetAllCatalogueState.Error -> {
+                    binding.tblCateMed.visibility = View.GONE
+                    binding.tblCateMed.removeAllTabs()
+                    Log.d("Home Catalogue Error", state.message)
+                }
+
+            }
+        }
+    }
+
+    private fun setupObserversMedicineLst() {
+        homeViewModel.getProductByCatalogueIdState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is GetProductByCatalogueIdState.Loading -> {
+                    binding.prgBarLoadHomeMed.visibility = View.VISIBLE
+                }
+
+                is GetProductByCatalogueIdState.Success -> {
+                    binding.prgBarLoadHomeMed.visibility = View.GONE
+                    val homeMedItemLst = state.medicineLst
+
+                    Log.d("Medicine lst", homeMedItemLst.toString())
+                    val medItemLayoutManager = GridLayoutManager(requireContext(), 2)
+                    binding.rvMedHome.layoutManager = medItemLayoutManager
+                    homeMedIAdapter = homeMedItemLst?.let { MedItemRV(requireContext(), it) }!!
+                    binding.rvMedHome.adapter = homeMedIAdapter
+                }
+
+                is GetProductByCatalogueIdState.Error -> {
+                    binding.prgBarLoadHomeMed.visibility = View.GONE
+                    Log.d("Home Medicine Error", state.message)
+                }
+            }
+        }
+    }
+
 
     private fun dataInitialize() {
 
@@ -181,7 +246,8 @@ class HomeFragment : Fragment() {
         )
 
         for (i in imgFuncId.indices) {
-            val homeFuncItem = HomeFuncItem(imgFuncId[i], titleFuncText[i], describeFuncText[i])
+            val homeFuncItem =
+                HomeFuncItem(imgFuncId[i], titleFuncText[i], describeFuncText[i])
             homeFuncItemLst.add(homeFuncItem)
         }
 
@@ -232,7 +298,8 @@ class HomeFragment : Fragment() {
         )
 
         for (i in imgDoctorItemID.indices) {
-            val homeDoctorItem = HomeDoctorItem(imgDoctorItemID[i], txtDocSpe[i], txtDocName[i])
+            val homeDoctorItem =
+                HomeDoctorItem(imgDoctorItemID[i], txtDocSpe[i], txtDocName[i])
             homeDoctorItemLst.add(homeDoctorItem)
         }
 
@@ -296,61 +363,6 @@ class HomeFragment : Fragment() {
             homeBlogItemLst.add(homeBlogItem)
         }
 
-        homeMedItemLst = arrayListOf<HomeMedItem>()
 
-        imgMedID = arrayOf(
-            R.drawable.img_med_1,
-            R.drawable.img_med_2,
-            R.drawable.img_med_3,
-            R.drawable.img_med_4,
-            R.drawable.img_med_5,
-            R.drawable.img_med_6
-        )
-
-        txtMedName = arrayOf(
-            "Acetaminophen (Paracetamol)",
-            "Prozac (Fluoxetine)",
-            "Plavix (Clopidogrel)",
-            "Zoloft (Sertraline)",
-            "Augmentin (Amoxicillin/Clavulanate)",
-            "APrednisone",
-        )
-
-        txtMedPrice = arrayOf(
-            "11.000 ₫",
-            "12.000 ₫",
-            "13.000 ₫",
-            "14.000 ₫",
-            "15.000 ₫",
-            "16.000 ₫"
-        )
-
-        txtMedUnit = arrayOf(
-            "Hộp",
-            "Lọ",
-            "Hộp",
-            "Vỉ",
-            "Lọ",
-            "Vỉ",
-        )
-
-        for (i in imgMedID.indices) {
-            val homeMedItem = HomeMedItem(imgMedID[i], txtMedName[i], txtMedPrice[i], txtMedUnit[i])
-            homeMedItemLst.add(homeMedItem)
-        }
-
-        homeMedCategoryLst = arrayListOf<HomeMedCategory>()
-
-        cateMedName = arrayOf(
-            "Tất cả",
-            "Chăm sóc cá nhân",
-            "Làm đẹp",
-            "Bệnh lý"
-        )
-
-        for (i in cateMedName.indices) {
-            val homeMedCategory = HomeMedCategory(cateMedName[i])
-            homeMedCategoryLst.add(homeMedCategory)
-        }
     }
 }

@@ -1,9 +1,6 @@
 package com.hau.carepointtmdt.network
 
 import android.content.Context
-import android.database.Cursor
-import android.net.Uri
-import android.provider.MediaStore
 import com.cloudinary.android.MediaManager
 
 object CloudinaryConfig {

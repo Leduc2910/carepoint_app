@@ -2,8 +2,6 @@ package com.hau.carepointtmdt.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.InputMethodManager
@@ -11,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityLoginBinding
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.viewmodel.LoginState

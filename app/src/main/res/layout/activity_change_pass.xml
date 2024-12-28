@@ -33,7 +33,7 @@
             app:tint="@color/text_invert" />
 
         <TextView
-            android:id="@+id/textView42"
+            android:id="@+id/txtDetailOrigin"
             style="@style/Text.Body18px.Medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView44"
+                android:id="@+id/txtDetailManu"
                 style="@style/Text.Body16px.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView46"
+                android:id="@+id/txtDetailIngredient"
                 style="@style/Text.Body16px.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

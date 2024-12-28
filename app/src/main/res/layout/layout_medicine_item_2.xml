@@ -2,20 +2,20 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="0dp"
-    android:layout_width="match_parent"
     android:background="@android:color/transparent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:background="@drawable/bg_item_func"
+        android:padding="16dp"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imgMedHome"
-            android:layout_width="wrap_content"
+            android:id="@+id/imgMedHome2"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:srcCompat="@drawable/img_med_1" />
@@ -29,7 +29,7 @@
             <TextView
                 style="@style/Text.Caption14px.Medium"
                 android:textColor="@color/text_primary"
-                android:id="@+id/txtMedName"
+                android:id="@+id/txtMedName2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -45,7 +45,7 @@
                 <TextView
                     style="@style/Text.Body16px.Medium"
                     android:textColor="@color/brand"
-                    android:id="@+id/txtMedPrice"
+                    android:id="@+id/txtMedPrice2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15.000 ₫" />
@@ -62,7 +62,7 @@
                 <TextView
                     style="@style/Text.Caption14px.Regular"
                     android:textColor="@color/text_secondary"
-                    android:id="@+id/txtMedUnit"
+                    android:id="@+id/txtMedUnit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hộp" />
