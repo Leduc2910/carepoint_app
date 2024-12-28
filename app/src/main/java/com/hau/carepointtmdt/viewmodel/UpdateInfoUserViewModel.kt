@@ -22,7 +22,7 @@ class UpdateInfoUserViewModel : ViewModel() {
             try {
                 val response =
                     userRepository.updateInfoUser(name, gender, birthday, avatar, user_id)
-
+                Log.d("update user response", response.toString())
                 if (response.isSuccessful && response.body() != null) {
                     val updateInfoUserResponse = response.body()!!
                     if (!updateInfoUserResponse.result.error) {

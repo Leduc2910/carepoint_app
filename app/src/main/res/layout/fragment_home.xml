@@ -126,7 +126,8 @@
                     android:orientation="horizontal"
                     android:paddingVertical="12dp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="5dp">
+                    android:paddingEnd="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView19"

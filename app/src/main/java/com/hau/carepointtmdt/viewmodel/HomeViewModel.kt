@@ -27,7 +27,6 @@ class HomeViewModel : ViewModel() {
 
             try {
                 val response = medCataRepo.getAllCatalogue()
-                Log.d("Response", response.toString())
                 if (response.isSuccessful && response.body() != null) {
                     val getAllCatalogueResponse = response.body()!!
                     if (!getAllCatalogueResponse.result.error) {
@@ -45,13 +44,12 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun getProductByCatalogueId(catalogue_id: Int) {
+    fun getProductByCatalogueId(pCatalogue_id: Int) {
         viewModelScope.launch {
             _getProductByCatalogueIdState.value = GetProductByCatalogueIdState.Loading
 
             try {
-                val response = medRepo.getProductByCatalogueId(catalogue_id)
-                Log.d("productLst", response.toString())
+                val response = medRepo.getProductByCatalogueId(pCatalogue_id)
                 if (response.isSuccessful && response.body() != null) {
                     val getProductByCatalogueIdResponse = response.body()!!
                     if (!getProductByCatalogueIdResponse.result.error) {

@@ -168,6 +168,7 @@ class HomeFragment : Fragment() {
                         override fun onTabSelected(tab: TabLayout.Tab?) {
                             val catalogueId = tab?.tag as? Int
                             if (catalogueId != null) {
+                                Log.d("CatalogueID", catalogueId.toString())
                                 homeViewModel.getProductByCatalogueId(catalogueId)
                             }
                         }
@@ -201,7 +202,6 @@ class HomeFragment : Fragment() {
                     binding.prgBarLoadHomeMed.visibility = View.GONE
                     val homeMedItemLst = state.medicineLst
 
-                    Log.d("Medicine lst", homeMedItemLst.toString())
                     val medItemLayoutManager = GridLayoutManager(requireContext(), 2)
                     binding.rvMedHome.layoutManager = medItemLayoutManager
                     homeMedIAdapter = homeMedItemLst?.let { MedItemRV(requireContext(), it) }!!

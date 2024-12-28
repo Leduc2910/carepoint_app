@@ -1,12 +1,14 @@
 package com.hau.carepointtmdt.network
 
 import com.hau.carepointtmdt.request.ChangePassRequest
+import com.hau.carepointtmdt.request.GetMedicineByIdRequest
 import com.hau.carepointtmdt.request.GetProductByCatalogueIdRequest
 import com.hau.carepointtmdt.request.LoginRequest
 import com.hau.carepointtmdt.request.RegisterRequest
 import com.hau.carepointtmdt.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.response.ChangePassResponse
 import com.hau.carepointtmdt.response.GetAllCatalogueResponse
+import com.hau.carepointtmdt.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.response.GetProductByCatalogueIdResponse
 import com.hau.carepointtmdt.response.LoginResponse
 import com.hau.carepointtmdt.response.RegisterResponse
@@ -35,6 +37,6 @@ interface ApiService {
     suspend fun getProductByCatalogueId(@Body request: GetProductByCatalogueIdRequest): Response<GetProductByCatalogueIdResponse>
 
     @POST("getMedicineById.php")
-    suspend fun getMedicineById(@Body request: GetProductByCatalogueIdRequest): Response<GetProductByCatalogueIdResponse>
+    suspend fun getMedicineById(@Body request: GetMedicineByIdRequest): Response<GetMedicineByIdResponse>
 
 }
