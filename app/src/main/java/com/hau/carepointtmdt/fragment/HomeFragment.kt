@@ -56,8 +56,6 @@ class HomeFragment : Fragment() {
     private lateinit var homeQuickTestLst: ArrayList<HomeQuickTestItem>
     private lateinit var homeBlogItemLst: ArrayList<HomeBlogItem>
 
-    private var currentMedCataId: Int? = 1
-
     var space: Int = 0
     var space2: Int = 0
     var endSpace: Int = 0
@@ -137,6 +135,11 @@ class HomeFragment : Fragment() {
         setupObserversCatalogueLst()
         setupObserversMedicineLst()
         homeViewModel.getAllCatalogue()
+
+        binding.btnGoToMedicineHome.setOnClickListener {
+            val intent = Intent(requireContext(), MedicineHomeActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
