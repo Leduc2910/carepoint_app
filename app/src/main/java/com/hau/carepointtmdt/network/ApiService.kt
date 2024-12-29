@@ -9,6 +9,7 @@ import com.hau.carepointtmdt.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.response.ChangePassResponse
 import com.hau.carepointtmdt.response.GetAllCatalogueResponse
 import com.hau.carepointtmdt.response.GetMedicineByIdResponse
+import com.hau.carepointtmdt.response.GetMedicineResponse
 import com.hau.carepointtmdt.response.GetProductByCatalogueIdResponse
 import com.hau.carepointtmdt.response.LoginResponse
 import com.hau.carepointtmdt.response.RegisterResponse
@@ -39,4 +40,6 @@ interface ApiService {
     @POST("getMedicineById.php")
     suspend fun getMedicineById(@Body request: GetMedicineByIdRequest): Response<GetMedicineByIdResponse>
 
+    @POST ("getAllMedicine.php")
+    suspend fun getAllMedicine() : Response<GetMedicineResponse>
 }

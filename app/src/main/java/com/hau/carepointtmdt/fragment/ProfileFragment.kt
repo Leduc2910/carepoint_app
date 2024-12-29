@@ -55,7 +55,6 @@ class ProfileFragment : Fragment() {
 
         binding.btnLogout.setOnClickListener(View.OnClickListener {
             sharedPreferences.clearUser()
-            Log.d("user", sharedPreferences.getUser().toString())
             val loginActivity = Intent(requireContext(), LoginActivity::class.java)
             startActivity(loginActivity)
             requireActivity().finish()

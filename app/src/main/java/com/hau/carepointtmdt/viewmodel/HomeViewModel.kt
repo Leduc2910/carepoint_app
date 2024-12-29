@@ -1,12 +1,9 @@
 package com.hau.carepointtmdt.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hau.carepointtmdt.model.MedCatalogue
-import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.repository.MedCatalogueRepository
 import com.hau.carepointtmdt.repository.MedicineRepository
 import kotlinx.coroutines.launch
@@ -19,7 +16,9 @@ class HomeViewModel : ViewModel() {
     val getAllCatalogueState: LiveData<GetAllCatalogueState> = _getAllCatalogueState
 
     private val _getProductByCatalogueIdState = MutableLiveData<GetProductByCatalogueIdState>()
-    val getProductByCatalogueIdState: LiveData<GetProductByCatalogueIdState> = _getProductByCatalogueIdState
+    val getProductByCatalogueIdState: LiveData<GetProductByCatalogueIdState> =
+        _getProductByCatalogueIdState
+
 
     fun getAllCatalogue() {
         viewModelScope.launch {
@@ -64,20 +63,11 @@ class HomeViewModel : ViewModel() {
                 _getProductByCatalogueIdState.value =
                     GetProductByCatalogueIdState.Error("Đã xảy ra lỗi: ${e.message}")
             }
-            }
         }
     }
 
-    sealed class GetAllCatalogueState {
-        object Loading : GetAllCatalogueState()
-        data class Success(val catalogueLst: List<MedCatalogue>) : GetAllCatalogueState()
-        data class Error(val message: String) : GetAllCatalogueState()
-    }
+}
 
-    sealed class GetProductByCatalogueIdState {
-        object Loading : GetProductByCatalogueIdState()
-        data class Success(val medicineLst: List<Medicine>?) : GetProductByCatalogueIdState()
-        data class Error(val message: String) : GetProductByCatalogueIdState()
-    }
+
 
 

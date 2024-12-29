@@ -45,9 +45,3 @@ class UpdateInfoUserViewModel : ViewModel() {
     }
 }
 
-sealed class UpdateInfoUserState {
-    object Loading : UpdateInfoUserState()
-    data class Success(val user: User?) : UpdateInfoUserState()
-    data class Error(val message: String) : UpdateInfoUserState()
-}
-

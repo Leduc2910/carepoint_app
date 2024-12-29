@@ -40,8 +40,3 @@ class ChangePassViewModel : ViewModel() {
     }
 }
 
-sealed class ChangePassState {
-    object Loading : ChangePassState()
-    data class Success(val message: String) : ChangePassState()
-    data class Error(val message: String, val error_code : Int) : ChangePassState()
-}

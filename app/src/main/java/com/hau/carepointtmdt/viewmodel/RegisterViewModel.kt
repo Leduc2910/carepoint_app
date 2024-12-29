@@ -35,9 +35,3 @@ class RegisterViewModel: ViewModel() {
 
 }
 
-sealed class RegisterState {
-    object Loading : RegisterState()
-    data class Success(val message: String) : RegisterState()
-    data class Error(val message: String) : RegisterState()
-
-}

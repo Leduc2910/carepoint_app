@@ -1,11 +1,13 @@
 package com.hau.carepointtmdt.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.hau.carepointtmdt.activity.MedicineHomeActivity
 import com.hau.carepointtmdt.model.HomeFuncItem
 import com.hau.carepointtmdt.databinding.LayoutItemFuncBinding
 
@@ -38,5 +40,12 @@ class HomeFunctionItemRecycleView(
         holder.imgFuncItem.setImageResource(currentItem.img)
         holder.titleFuncItem.text = currentItem.title
         holder.desFuncItem.text = currentItem.des
+
+        holder.itemView.setOnClickListener {
+            if (position == 1) {
+                val intent = Intent(mContext, MedicineHomeActivity::class.java)
+                mContext.startActivity(intent)
+            }
+        }
     }
 }

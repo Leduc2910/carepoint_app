@@ -1,11 +1,13 @@
 package com.hau.carepointtmdt.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,12 +24,14 @@ import com.hau.carepointtmdt.model.HomeFuncItem
 import com.hau.carepointtmdt.model.HomeSpecialtyItem
 import com.hau.carepointtmdt.model.HomeQuickTestItem
 import com.hau.carepointtmdt.R
+import com.hau.carepointtmdt.activity.MedicineHomeActivity
 import com.hau.carepointtmdt.validation.CustomHorizontalDecoration
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.databinding.FragmentHomeBinding
 import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.viewmodel.GetAllCatalogueState
+import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.GetProductByCatalogueIdState
 import com.hau.carepointtmdt.viewmodel.HomeViewModel
 
@@ -51,6 +55,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeDoctorItemLst: ArrayList<HomeDoctorItem>
     private lateinit var homeQuickTestLst: ArrayList<HomeQuickTestItem>
     private lateinit var homeBlogItemLst: ArrayList<HomeBlogItem>
+
+    private var currentMedCataId: Int? = 1
 
     var space: Int = 0
     var space2: Int = 0
