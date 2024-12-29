@@ -71,9 +71,13 @@ class MedicineHomeActivity : AppCompatActivity() {
             when (state) {
                 is GetMedicineState.Loading -> {
                     binding.prgBarDiscountMedicine.visibility = View.VISIBLE
+                    binding.prgBarNewStockMedicine.visibility = View.VISIBLE
+                    binding.prgBarAllMedicine.visibility = View.VISIBLE
                 }
                 is GetMedicineState.Success -> {
                     binding.prgBarDiscountMedicine.visibility = View.GONE
+                    binding.prgBarNewStockMedicine.visibility = View.GONE
+                    binding.prgBarAllMedicine.visibility = View.GONE
 
 //                    var discountMedicineLst = state.medicineLst
 //                    Log.d("discountMedicineLst", discountMedicineLst.toString())
@@ -129,6 +133,8 @@ class MedicineHomeActivity : AppCompatActivity() {
                 }
                 is GetMedicineState.Error -> {
                     binding.prgBarDiscountMedicine.visibility = View.GONE
+                    binding.prgBarNewStockMedicine.visibility = View.GONE
+                    binding.prgBarAllMedicine.visibility = View.GONE
                     Log.d("Home Medicine Error", state.message)
                 }
             }
