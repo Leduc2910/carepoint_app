@@ -6,7 +6,7 @@
     android:background="@color/bg_secondary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ActivityPurchaseOrder">
+    tools:context=".view.activity.ActivityPurchaseOrder">
 
     <ScrollView
         android:layout_width="match_parent"

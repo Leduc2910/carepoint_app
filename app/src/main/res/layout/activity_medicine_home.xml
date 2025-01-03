@@ -6,7 +6,7 @@
     android:background="@color/bg_primary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MedicineHomeActivity">
+    tools:context=".view.activity.MedicineHomeActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -249,7 +249,7 @@
                     <TextView
                         style="@style/Text.Body16px.Medium"
                         android:textColor="@color/accent"
-                        android:id="@+id/textView67"
+                        android:id="@+id/btnNewMedLst"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Xem thêm" />
@@ -315,7 +315,7 @@
                     <TextView
                         style="@style/Text.Body16px.Medium"
                         android:textColor="@color/accent"
-                        android:id="@+id/textView68"
+                        android:id="@+id/btnAllMedLst"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Xem thêm" />

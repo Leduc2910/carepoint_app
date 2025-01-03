@@ -22,31 +22,40 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
         <activity
-            android:name=".activity.MedicineHomeActivity"
+            android:name=".view.activity.CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.DetailMedicineActivity"
+            android:name=".view.activity.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.EditInformationActivity"
+            android:name=".view.activity.MedicineListActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ActivityPurchaseOrder"
+            android:name=".view.activity.MedicineHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ChangePassActivity"
+            android:name=".view.activity.DetailMedicineActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SignupActivity"
+            android:name=".view.activity.EditInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".view.activity.ActivityPurchaseOrder"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.ChangePassActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.OnboardActivity"
+            android:name=".view.activity.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.OnboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

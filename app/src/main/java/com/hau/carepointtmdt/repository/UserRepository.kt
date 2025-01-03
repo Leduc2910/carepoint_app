@@ -1,14 +1,14 @@
 package com.hau.carepointtmdt.repository
 
 import com.hau.carepointtmdt.network.RetrofitInstance
-import com.hau.carepointtmdt.request.ChangePassRequest
-import com.hau.carepointtmdt.request.LoginRequest
-import com.hau.carepointtmdt.request.RegisterRequest
-import com.hau.carepointtmdt.request.UpdateInfoUserRequest
-import com.hau.carepointtmdt.response.ChangePassResponse
-import com.hau.carepointtmdt.response.LoginResponse
-import com.hau.carepointtmdt.response.RegisterResponse
-import com.hau.carepointtmdt.response.UpdateInfoUserResponse
+import com.hau.carepointtmdt.network.request.ChangePassRequest
+import com.hau.carepointtmdt.network.request.LoginRequest
+import com.hau.carepointtmdt.network.request.RegisterRequest
+import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
+import com.hau.carepointtmdt.network.response.ChangePassResponse
+import com.hau.carepointtmdt.network.response.LoginResponse
+import com.hau.carepointtmdt.network.response.RegisterResponse
+import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
 import retrofit2.Response
 
 

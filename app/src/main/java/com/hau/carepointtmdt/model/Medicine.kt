@@ -12,5 +12,7 @@ data class Medicine(
     val manufacturer: String,
     val origin: String,
     val ingredient: String,
-    val usages: String
+    val usages: String,
+    val quantity : Int,
+    val order_quantity : Int
 )

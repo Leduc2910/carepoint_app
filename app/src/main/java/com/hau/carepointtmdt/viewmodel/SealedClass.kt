@@ -2,6 +2,8 @@ package com.hau.carepointtmdt.viewmodel
 
 import com.hau.carepointtmdt.model.MedCatalogue
 import com.hau.carepointtmdt.model.Medicine
+import com.hau.carepointtmdt.model.Order
+import com.hau.carepointtmdt.model.Order_Item
 import com.hau.carepointtmdt.model.User
 
 sealed class GetAllCatalogueState {
@@ -51,4 +53,19 @@ sealed class GetMedicineState {
     object Loading : GetMedicineState()
     data class Success(val medicineLst: List<Medicine>) : GetMedicineState()
     data class Error(val message: String) : GetMedicineState()
+}
+sealed class GetOrderByStatusState {
+    object Loading : GetOrderByStatusState()
+    data class Success(val order: Order) : GetOrderByStatusState()
+    data class Error(val message: String) : GetOrderByStatusState()
+}
+sealed class GetOrderItemByOrderIdState {
+    object Loading : GetOrderItemByOrderIdState()
+    data class Success(val orderItemLst: List<Order_Item>) : GetOrderItemByOrderIdState()
+    data class Error(val message: String) : GetOrderItemByOrderIdState()
+}
+sealed class AddToCartState {
+    object Loading : AddToCartState()
+    data class Success(val message: String) : AddToCartState()
+    data class Error(val message: String) : AddToCartState()
 }

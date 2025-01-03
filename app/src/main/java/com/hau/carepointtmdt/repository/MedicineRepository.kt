@@ -1,11 +1,11 @@
 package com.hau.carepointtmdt.repository
 
 import com.hau.carepointtmdt.network.RetrofitInstance
-import com.hau.carepointtmdt.request.GetMedicineByIdRequest
-import com.hau.carepointtmdt.request.GetProductByCatalogueIdRequest
-import com.hau.carepointtmdt.response.GetMedicineByIdResponse
-import com.hau.carepointtmdt.response.GetMedicineResponse
-import com.hau.carepointtmdt.response.GetProductByCatalogueIdResponse
+import com.hau.carepointtmdt.network.request.GetMedicineByIdRequest
+import com.hau.carepointtmdt.network.request.GetProductByCatalogueIdRequest
+import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
+import com.hau.carepointtmdt.network.response.GetMedicineResponse
+import com.hau.carepointtmdt.network.response.GetProductByCatalogueIdResponse
 import retrofit2.Response
 
 class MedicineRepository {

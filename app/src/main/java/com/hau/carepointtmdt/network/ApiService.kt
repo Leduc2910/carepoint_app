@@ -1,19 +1,29 @@
 package com.hau.carepointtmdt.network
 
-import com.hau.carepointtmdt.request.ChangePassRequest
-import com.hau.carepointtmdt.request.GetMedicineByIdRequest
-import com.hau.carepointtmdt.request.GetProductByCatalogueIdRequest
-import com.hau.carepointtmdt.request.LoginRequest
-import com.hau.carepointtmdt.request.RegisterRequest
-import com.hau.carepointtmdt.request.UpdateInfoUserRequest
-import com.hau.carepointtmdt.response.ChangePassResponse
-import com.hau.carepointtmdt.response.GetAllCatalogueResponse
-import com.hau.carepointtmdt.response.GetMedicineByIdResponse
-import com.hau.carepointtmdt.response.GetMedicineResponse
-import com.hau.carepointtmdt.response.GetProductByCatalogueIdResponse
-import com.hau.carepointtmdt.response.LoginResponse
-import com.hau.carepointtmdt.response.RegisterResponse
-import com.hau.carepointtmdt.response.UpdateInfoUserResponse
+import com.hau.carepointtmdt.network.request.AddToCartRequest
+import com.hau.carepointtmdt.network.request.ChangePassRequest
+import com.hau.carepointtmdt.network.request.GetMedicineByIdRequest
+import com.hau.carepointtmdt.network.request.GetOrderByStatusRequest
+import com.hau.carepointtmdt.network.request.GetOrderItemByOrderIdRequest
+import com.hau.carepointtmdt.network.request.GetProductByCatalogueIdRequest
+import com.hau.carepointtmdt.network.request.LoginRequest
+import com.hau.carepointtmdt.network.request.RegisterRequest
+import com.hau.carepointtmdt.network.request.SelectOrderItemRequest
+import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
+import com.hau.carepointtmdt.network.request.UpdateOrderPriceRequest
+import com.hau.carepointtmdt.network.response.AddToCartResponse
+import com.hau.carepointtmdt.network.response.ChangePassResponse
+import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
+import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
+import com.hau.carepointtmdt.network.response.GetMedicineResponse
+import com.hau.carepointtmdt.network.response.GetOrderByStatusResponse
+import com.hau.carepointtmdt.network.response.GetOrderItemByOrderIdResponse
+import com.hau.carepointtmdt.network.response.GetProductByCatalogueIdResponse
+import com.hau.carepointtmdt.network.response.LoginResponse
+import com.hau.carepointtmdt.network.response.RegisterResponse
+import com.hau.carepointtmdt.network.response.SelectOrderItemResponse
+import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
+import com.hau.carepointtmdt.network.response.UpdateOrderPriceResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -42,4 +52,19 @@ interface ApiService {
 
     @POST ("getAllMedicine.php")
     suspend fun getAllMedicine() : Response<GetMedicineResponse>
+
+    @POST("getOrderByStatus.php")
+    suspend fun getOrderByStatus(@Body request: GetOrderByStatusRequest) : Response<GetOrderByStatusResponse>
+
+    @POST("getOrderItemByOrderId.php")
+    suspend fun getOrderItemByOrderId(@Body request: GetOrderItemByOrderIdRequest) : Response<GetOrderItemByOrderIdResponse>
+
+    @POST("addToCart.php")
+    suspend fun addToCart(@Body request: AddToCartRequest) : Response<AddToCartResponse>
+
+    @POST("selectOrderItem.php")
+    suspend fun selectOrderItem(@Body request : SelectOrderItemRequest) : Response<SelectOrderItemResponse>
+
+    @POST("updateOrderPrice.php")
+    suspend fun updateOrderPrice (@Body request : UpdateOrderPriceRequest) : Response<UpdateOrderPriceResponse>
 }
