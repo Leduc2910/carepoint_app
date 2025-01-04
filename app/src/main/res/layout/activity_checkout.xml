@@ -69,7 +69,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
                 android:orientation="vertical">
 
@@ -107,10 +107,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/hoverBtnToAddAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/btnToAddAddress"
@@ -126,8 +127,7 @@
                         android:id="@+id/frameAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/textView62"
+                                android:id="@+id/txtAddressName"
                                 style="@style/Text.Caption14px.Regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                                 android:textColor="@color/text_secondary" />
 
                             <TextView
-                                android:id="@+id/textView64"
+                                android:id="@+id/txtAddressPhone"
                                 style="@style/Text.Caption14px.Regular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                                 android:src="@drawable/ic_pin_solid" />
 
                             <TextView
-                                android:id="@+id/textView67"
+                                android:id="@+id/txtAddress"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -204,126 +204,31 @@
                         android:text="Phương thức vận chuyển"
                         android:textColor="@color/text_primary" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content">
 
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/radioButton2"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvDelivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                        <ProgressBar
+                            android:id="@+id/prgBarLoadDelivery"
+                            style="?android:attr/progressBarStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:buttonTint="@color/brand" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView70"
-                                style="@style/Text.Caption14px.Regular"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Giao hàng nhanh"
-                                android:textColor="@color/text_primary" />
-
-                            <TextView
-                                android:id="@+id/textView71"
-                                style="@style/Text.Caption14px.Regular"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="(Nhận hàng trong 2 giờ)"
-                                android:textColor="@color/text_secondary" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/textView72"
-                                style="@style/Text.Body16px.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="50,000"
-                                android:textColor="@color/text_primary" />
-
-                            <TextView
-                                android:id="@+id/textView73"
-                                style="@style/Text.Body16px.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" đ"
-                                android:textColor="@color/text_primary" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/radioButton3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:buttonTint="@color/brand" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView74"
-                                style="@style/Text.Caption14px.Regular"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Giao hàng thường"
-                                android:textColor="@color/text_primary" />
-
-                            <TextView
-                                android:id="@+id/textView75"
-                                style="@style/Text.Caption14px.Regular"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="(Nhận hàng trong 3 - 4 ngày)"
-                                android:textColor="@color/text_secondary" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/textView76"
-                                style="@style/Text.Body16px.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="30,000"
-                                android:textColor="@color/text_primary" />
-
-                            <TextView
-                                android:id="@+id/textView77"
-                                style="@style/Text.Body16px.Medium"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=" đ"
-                                android:textColor="@color/text_primary" />
-                        </LinearLayout>
-                    </LinearLayout>
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/brand"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
@@ -351,7 +256,7 @@
                             android:textColor="@color/text_primary" />
 
                         <TextView
-                            android:id="@+id/textView79"
+                            android:id="@+id/btnBuyMore"
                             style="@style/Text.Body16px.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -364,7 +269,7 @@
                         android:layout_height="wrap_content">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView"
+                            android:id="@+id/rvOrderItem"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -387,20 +292,6 @@
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageView35"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:rotation="90"
-                            android:src="@drawable/ic_caretright"
-                            app:tint="@color/text_primary" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -440,7 +331,7 @@
                             android:textColor="@color/text_primary" />
 
                         <TextView
-                            android:id="@+id/textView82"
+                            android:id="@+id/txtTotalPrice"
                             style="@style/Text.Body16px.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -473,7 +364,7 @@
                             android:textColor="@color/text_primary" />
 
                         <TextView
-                            android:id="@+id/textView85"
+                            android:id="@+id/txtDeliveryPrice"
                             style="@style/Text.Body16px.Regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -513,7 +404,7 @@
                             android:textColor="@color/brand" />
 
                         <TextView
-                            android:id="@+id/textView88"
+                            android:id="@+id/txtPrice"
                             style="@style/Text.Body16px.Regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -546,7 +437,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnCheckout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/default_primary_btn"
@@ -564,6 +455,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
+        android:focusableInTouchMode="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -614,7 +506,7 @@
                         android:textColor="@color/text_primary" />
 
                     <ImageView
-                        android:id="@+id/btnCloseBuy"
+                        android:id="@+id/btnCloseLstAddress"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="end|center"
@@ -627,7 +519,7 @@
                     android:id="@+id/view7"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@color/stroke_primary"
                     android:padding="0dp" />
 
@@ -638,6 +530,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAddressLst"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -763,6 +656,17 @@
                             android:paddingVertical="10dp"
                             android:text="Trần Huy Chiến"
                             android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/txtErrorAddressName2"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -792,6 +696,17 @@
                             android:paddingVertical="10dp"
                             android:text="0123456788"
                             android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/txtErrorAddressPhone2"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -822,6 +737,17 @@
                             android:text="Nam"
                             android:textColor="@color/text_secondary" />
 
+                        <TextView
+                            android:id="@+id/txtErrorAddress2"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -834,7 +760,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Đặt làm địa chỉ mặc định" />
+                            android:text="Đặt làm địa chỉ mặc định"
+                            android:thumbTint="@color/brand" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -941,6 +868,17 @@
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="10dp"
                             android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/txtErrorAddressName"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -969,6 +907,17 @@
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="10dp"
                             android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/txtErrorAddressPhone"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -998,6 +947,16 @@
                             android:paddingVertical="10dp"
                             android:textColor="@color/text_secondary" />
 
+                        <TextView
+                            android:id="@+id/txtErrorAddress"
+                            style="@style/Text.Caption14px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingHorizontal="15dp"
+                            android:text="Sai định dạng số điện thoại"
+                            android:textColor="@color/error"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -1010,11 +969,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:checked="true"
                             android:text="Đặt làm địa chỉ mặc định"
-                            android:thumbTint="@color/text_invert"
-                            android:trackTint="@color/brand"
-                            android:trackTintMode="screen" />
+                            android:thumbTint="@color/brand" />
                     </LinearLayout>
                 </LinearLayout>
 

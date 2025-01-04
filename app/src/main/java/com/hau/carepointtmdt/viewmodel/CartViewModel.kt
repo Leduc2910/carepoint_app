@@ -32,6 +32,8 @@ class CartViewModel : ViewModel() {
     private val _deleteOrderItem = MutableLiveData<DeleteOrderItemState>()
     val deleteOrderItem: LiveData<DeleteOrderItemState> = _deleteOrderItem
 
+
+
     fun getOrderItemByOrderId(order_id: Int) {
         _orderItemByOrderId.value = GetOrderItemByOrderIdState.Loading
         viewModelScope.launch {

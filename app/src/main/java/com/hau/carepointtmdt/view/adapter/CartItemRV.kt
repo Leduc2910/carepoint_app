@@ -41,7 +41,6 @@ class CartItemRV(
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val orderItem = orderItemLst[position]
 
-        // Tìm medicine tương ứng với orderItem
         val medicine = medicineLst.firstOrNull { it.medicine_id == orderItem.medicine_id }
 
         medicine?.let {

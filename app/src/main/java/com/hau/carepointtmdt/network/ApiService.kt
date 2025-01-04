@@ -21,6 +21,7 @@ import com.hau.carepointtmdt.network.response.CreateAddressResponse
 import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetAddressByUserIdResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
+import com.hau.carepointtmdt.network.response.GetDeliveryResponse
 import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.network.response.GetMedicineResponse
 import com.hau.carepointtmdt.network.response.GetOrderByStatusResponse
@@ -79,12 +80,15 @@ interface ApiService {
     @POST("deleteOrderItem.php")
     suspend fun deleteOrderItem(@Body request : DeleteOrderItemRequest) : Response<DeleteOrderItemResponse>
 
-    @POST
+    @POST("getAddressByUserId.php")
     suspend fun getAddressByUserId(@Body request : GetAddressByUserIdRequest) : Response<GetAddressByUserIdResponse>
 
-    @POST
+    @POST("createAddress.php")
     suspend fun createAddress(@Body request : CreateAddressRequest) : Response<CreateAddressResponse>
 
-    @POST
+    @POST("updateAddress.php")
     suspend fun updateAddress(@Body request : UpdateAddressRequest) : Response<UpdateAddressResponse>
+
+    @POST ("getAllDelivery.php")
+    suspend fun getDelivery() : Response<GetDeliveryResponse>
 }

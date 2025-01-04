@@ -1,6 +1,7 @@
 package com.hau.carepointtmdt.viewmodel
 
 import com.hau.carepointtmdt.model.Address
+import com.hau.carepointtmdt.model.Delivery
 import com.hau.carepointtmdt.model.MedCatalogue
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
@@ -99,5 +100,10 @@ sealed class UpdateAddressState {
     object Loading : UpdateAddressState()
     data class Success(val message: String) : UpdateAddressState()
     data class Error(val message: String) : UpdateAddressState()
+}
+sealed class GetDeliveryState {
+    object Loading : GetDeliveryState()
+    data class Success(val deliveryLst: List<Delivery>) : GetDeliveryState()
+    data class Error(val message: String) : GetDeliveryState()
 }
 

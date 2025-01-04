@@ -54,6 +54,7 @@ class CartActivity : AppCompatActivity() {
 
         currentUser = sharedPreferencesManager.getUser()!!
         order_user = sharedPreferencesManager.getOrder()!!
+        Log.d("orderUser", order_user.toString())
 
         binding.btnBack.setOnClickListener {
             finish()
