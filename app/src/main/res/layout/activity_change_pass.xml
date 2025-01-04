@@ -96,17 +96,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView31"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/edtOldPass"
-                    app:layout_constraintTop_toTopOf="@+id/edtOldPass"
-                    app:srcCompat="@drawable/ic_eyeclose"
-                    app:tint="@color/text_secondary"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -159,16 +148,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView32"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/edtNewPass"
-                    app:layout_constraintTop_toTopOf="@+id/edtNewPass"
-                    app:srcCompat="@drawable/ic_eyeclose"
-                    app:tint="@color/text_secondary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -220,16 +199,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView33"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/edtConfirmNewPass"
-                    app:layout_constraintTop_toTopOf="@+id/edtConfirmNewPass"
-                    app:srcCompat="@drawable/ic_eyeclose"
-                    app:tint="@color/text_secondary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

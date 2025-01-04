@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,8 +8,13 @@
     tools:context=".view.activity.CheckoutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout29"
@@ -93,7 +98,7 @@
                             android:textColor="@color/text_primary" />
 
                         <TextView
-                            android:id="@+id/textView61"
+                            android:id="@+id/btnToAddress"
                             style="@style/Text.Caption14px.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -108,7 +113,7 @@
 
 
                         <TextView
-                            android:id="@+id/textView48"
+                            android:id="@+id/btnToAddAddress"
                             style="@style/Text.Caption14px.Regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -553,36 +558,486 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/bg_login_white"
-        android:orientation="vertical"
-        android:paddingTop="18dp"
-        android:paddingBottom="48dp">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/overlayCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".5"
+            android:background="@color/bg_invert"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/textView91"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/frameLstAddress"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="@drawable/bg_login_white"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="28dp"
+                android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/imageView41"
-                android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:id="@+id/textView90"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Địa chỉ nhận hàng"
+                        android:textColor="@color/text_primary" />
+
+                    <ImageView
+                        android:id="@+id/btnCloseBuy"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/ic_x"
+                        app:tint="@color/text_primary" />
+                </FrameLayout>
+
+                <View
+                    android:id="@+id/view7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/stroke_primary"
+                    android:padding="0dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/prgBarLoadAddress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/brand"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="20dp">
+
+                    <Button
+                        android:id="@+id/btnToNewAddress"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/default_primary_btn"
+                        android:text="Thêm địa chỉ mới"
+                        android:textColor="@color/text_invert"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/frameEditAddress"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_x" />
+                android:background="@drawable/bg_login_white"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="28dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+
+                    <ImageView
+                        android:id="@+id/btnBackLstAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="-1"
+                        app:srcCompat="@drawable/ic_rightarrow"
+                        app:tint="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/textView56"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Sửa địa chỉ nhận hàng"
+                        android:textColor="@color/text_primary" />
+
+                    <ImageView
+                        android:id="@+id/btnCloseModal"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        app:srcCompat="@drawable/ic_x"
+                        app:tint="@color/text_primary" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_primary"
+                    android:padding="0dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView58"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Họ tên"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddressName"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/textfield_normal"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:text="Trần Huy Chiến"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView59"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Số điện thoại"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddressPhone"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/textfield_normal"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:text="0123456788"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView91"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Địa chỉ"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddress"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@drawable/bg_item_func"
+                            android:gravity="top"
+                            android:inputType="textMultiLine"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:text="Nam"
+                            android:textColor="@color/text_secondary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swIsDefault"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Đặt làm địa chỉ mặc định" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+
+                    <Button
+                        android:id="@+id/btnSaveAddress"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_primary_btn"
+                        android:text="Lưu"
+                        android:textColor="@color/text_invert"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/frameAddAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_login_white"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="28dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+
+                    <ImageView
+                        android:id="@+id/btnBackLstAddress2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="-1"
+                        app:srcCompat="@drawable/ic_rightarrow"
+                        app:tint="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/textView92"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Thêm địa chỉ nhận hàng"
+                        android:textColor="@color/text_primary" />
+
+                    <ImageView
+                        android:id="@+id/btnCloseModal2"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        app:srcCompat="@drawable/ic_x"
+                        app:tint="@color/text_primary" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/stroke_primary"
+                    android:padding="0dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView95"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Họ tên"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddressName2"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/textfield_normal"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView93"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Số điện thoại"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddressPhone2"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/textfield_normal"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:textColor="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView94"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="Địa chỉ"
+                            android:textColor="@color/text_primary" />
+
+                        <EditText
+                            android:id="@+id/edtAddress2"
+                            style="@style/Text.Body16px.Regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:background="@drawable/bg_item_func"
+                            android:gravity="top"
+                            android:inputType="textMultiLine"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="10dp"
+                            android:textColor="@color/text_secondary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Switch
+                            android:id="@+id/swIsDefault2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="Đặt làm địa chỉ mặc định"
+                            android:thumbTint="@color/text_invert"
+                            android:trackTint="@color/brand"
+                            android:trackTintMode="screen" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp">
+
+                    <Button
+                        android:id="@+id/btnAddAddress"
+                        style="@style/Text.Body18px.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_primary_btn"
+                        android:text="Thêm mới"
+                        android:textColor="@color/text_invert"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
         </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/stroke_primary" />
-    </LinearLayout>
-</FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

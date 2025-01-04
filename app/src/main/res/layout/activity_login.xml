@@ -173,17 +173,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-                <Button
-                    android:id="@+id/btnShowHidePass"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/ic_eye"
-                    app:backgroundTint="@color/text_secondary"
-                    app:layout_constraintBottom_toBottomOf="@+id/edtPassLogin"
-                    app:layout_constraintEnd_toEndOf="@+id/edtPassLogin"
-                    app:layout_constraintTop_toTopOf="@+id/edtPassLogin" />
-
                 <TextView
                     android:id="@+id/txtErrorPassLogin"
                     style="@style/Text.Caption14px.Regular"
