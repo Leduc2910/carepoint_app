@@ -14,8 +14,8 @@
         android:orientation="horizontal"
         android:padding="12dp">
 
-        <RadioButton
-            android:id="@+id/rdSelectBuy"
+        <CheckBox
+            android:id="@+id/cbSelectBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

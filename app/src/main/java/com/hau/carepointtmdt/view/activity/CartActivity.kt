@@ -7,18 +7,13 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityCartBinding
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.model.Order_Item
 import com.hau.carepointtmdt.model.User
-import com.hau.carepointtmdt.validation.CustomHorizontalDecoration
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.view.adapter.CartItemRV
@@ -59,6 +54,12 @@ class CartActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        if (order_user.totalPrice != 0) {
+            binding.btnOrder.text = "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
+        } else {
+            binding.btnOrder.text = "Mua hàng"
         }
 
         getAllMedicineObservers()
@@ -110,16 +111,8 @@ class CartActivity : AppCompatActivity() {
                             )
                         )
                     )
-                    cartItemRV = CartItemRV(this, orderItemLst, medicineLst)
+                    cartItemRV = CartItemRV(this, orderItemLst, medicineLst, cartViewModel)
                     binding.rvCartItem.adapter = cartItemRV
-
-                    cartItemRV.setOnItemClickListener { orderItem ->
-                        if (orderItem.isSelected == 2) {
-                            cartViewModel.selectOrderItem(orderItem.orderItem_id, 1)
-                        } else {
-                            cartViewModel.selectOrderItem(orderItem.orderItem_id, 2)
-                        }
-                    }
                 }
 
                 is GetOrderItemByOrderIdState.Error -> {
@@ -147,8 +140,6 @@ class CartActivity : AppCompatActivity() {
                         totalPrice += orderItem.totalPrice
                     }
                     cartViewModel.updateOrderPrice(order_user.order_id, totalPrice)
-
-                    cartItemRV.notifyDataSetChanged()
                 }
 
                 is SelectOrderItemState.Error -> {
@@ -170,8 +161,11 @@ class CartActivity : AppCompatActivity() {
                 is UpdateOrderPriceState.Success -> {
                     order_user = state.order_user
                     sharedPreferencesManager.saveOrder(state.order_user)
-                    binding.btnOrder.text = "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
-                    Log.d("order new", order_user.toString())
+                    if (order_user.totalPrice != 0) {
+                        binding.btnOrder.text = "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
+                    } else {
+                        binding.btnOrder.text = "Mua hàng"
+                    }
                 }
 
                 is UpdateOrderPriceState.Error -> {

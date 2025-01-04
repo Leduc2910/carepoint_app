@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hau.carepointtmdt.databinding.LayoutCartItemBinding
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order_Item
+import com.hau.carepointtmdt.viewmodel.CartViewModel
 import com.squareup.picasso.Picasso
 
 class CartItemRV(
     private val mContext: Context,
     private val orderItemLst: List<Order_Item>,
-    private val medicineLst: List<Medicine>
+    private val medicineLst: List<Medicine>, val cartViewModel: CartViewModel
 ) : RecyclerView.Adapter<CartItemRV.CartItemViewHolder>() {
 
-    private var itemClickListener: ((Order_Item) -> Unit)? = null
 
     inner class CartItemViewHolder(binding: LayoutCartItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -24,11 +24,12 @@ class CartItemRV(
         val txtCartMedName = binding.txtCartMedName
         val txtCartMedQuantity = binding.txtCartQuantity
         val txtCartMedTotal = binding.txtCartPrice
-        val rdSelectBuy = binding.rdSelectBuy
+        val cbSelectBuy = binding.cbSelectBuy
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
-        val binding = LayoutCartItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding =
+            LayoutCartItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
         return CartItemViewHolder(binding)
     }
 
@@ -38,7 +39,7 @@ class CartItemRV(
 
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val orderItem = orderItemLst[position]
-        holder.rdSelectBuy.isChecked = orderItem.isSelected == 2
+        holder.cbSelectBuy.isChecked = orderItem.isSelected == 2
 
         for (medicine: Medicine in medicineLst) {
             if (orderItem.medicine_id == medicine.medicine_id) {
@@ -51,13 +52,15 @@ class CartItemRV(
             }
         }
 
-        holder.rdSelectBuy.setOnClickListener {
-            itemClickListener?.invoke(orderItem)
+        holder.cbSelectBuy.setOnClickListener {
+            if (holder.cbSelectBuy.isChecked) {
+                orderItem.isSelected = 2
+                cartViewModel.selectOrderItem(orderItem.orderItem_id, 2)
+            } else {
+                orderItem.isSelected = 1
+                cartViewModel.selectOrderItem(orderItem.orderItem_id, 1)
+            }
         }
-    }
-
-    fun setOnItemClickListener(listener: (Order_Item) -> Unit) {
-        itemClickListener = listener
     }
 }
 
