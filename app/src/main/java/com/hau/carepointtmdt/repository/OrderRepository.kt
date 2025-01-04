@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.repository
 
+import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.network.RetrofitInstance
 import com.hau.carepointtmdt.network.request.GetOrderByStatusRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
@@ -12,8 +13,8 @@ class OrderRepository {
         val request = GetOrderByStatusRequest(userId, orderStatus)
         return RetrofitInstance.instance.getOrderByStatus(request)
     }
-    suspend fun updateOrderUser (order_id: Int, user_id: Int, totalPrice: Int, order_status: Int): Response<UpdateOrderUserResponse> {
-        val request = UpdateOrderUserRequest(order_id, user_id, totalPrice, order_status)
+    suspend fun updateOrderUser (order_user : Order): Response<UpdateOrderUserResponse> {
+        val request = UpdateOrderUserRequest(order_user)
         return RetrofitInstance.instance.updateOrderUser(request)
 
     }

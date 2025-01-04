@@ -4,7 +4,7 @@ data class Order_Item(
     val orderItem_id: Int,
     val order_id: Int,
     val medicine_id: Int,
-    val quantity: Int,
-    val totalPrice: Int,
+    var quantity: Int,
+    var totalPrice: Int,
     var isSelected: Int
 )

@@ -2,17 +2,19 @@ package com.hau.carepointtmdt.network
 
 import com.hau.carepointtmdt.network.request.AddToCartRequest
 import com.hau.carepointtmdt.network.request.ChangePassRequest
+import com.hau.carepointtmdt.network.request.DeleteOrderItemRequest
 import com.hau.carepointtmdt.network.request.GetMedicineByIdRequest
 import com.hau.carepointtmdt.network.request.GetOrderByStatusRequest
 import com.hau.carepointtmdt.network.request.GetOrderItemByOrderIdRequest
 import com.hau.carepointtmdt.network.request.GetProductByCatalogueIdRequest
 import com.hau.carepointtmdt.network.request.LoginRequest
 import com.hau.carepointtmdt.network.request.RegisterRequest
-import com.hau.carepointtmdt.network.request.SelectOrderItemRequest
+import com.hau.carepointtmdt.network.request.UpdateOrderItemRequest
 import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
 import com.hau.carepointtmdt.network.response.ChangePassResponse
+import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
 import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.network.response.GetMedicineResponse
@@ -21,7 +23,7 @@ import com.hau.carepointtmdt.network.response.GetOrderItemByOrderIdResponse
 import com.hau.carepointtmdt.network.response.GetProductByCatalogueIdResponse
 import com.hau.carepointtmdt.network.response.LoginResponse
 import com.hau.carepointtmdt.network.response.RegisterResponse
-import com.hau.carepointtmdt.network.response.SelectOrderItemResponse
+import com.hau.carepointtmdt.network.response.UpdateOrderItemResponse
 import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
 import retrofit2.Response
@@ -62,10 +64,12 @@ interface ApiService {
     @POST("addToCart.php")
     suspend fun addToCart(@Body request: AddToCartRequest) : Response<AddToCartResponse>
 
-    @POST("selectOrderItem.php")
-    suspend fun selectOrderItem(@Body request : SelectOrderItemRequest) : Response<SelectOrderItemResponse>
+    @POST("updateOrderItem.php")
+    suspend fun updateOrderItem(@Body request : UpdateOrderItemRequest) : Response<UpdateOrderItemResponse>
 
     @POST("updateOrderUser.php")
     suspend fun updateOrderUser (@Body request : UpdateOrderUserRequest) : Response<UpdateOrderUserResponse>
 
+    @POST("deleteOrderItem.php")
+    suspend fun deleteOrderItem(@Body request : DeleteOrderItemRequest) : Response<DeleteOrderItemResponse>
 }

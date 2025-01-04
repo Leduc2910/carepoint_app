@@ -69,13 +69,18 @@ sealed class AddToCartState {
     data class Success(val message: String) : AddToCartState()
     data class Error(val message: String) : AddToCartState()
 }
-sealed class SelectOrderItemState {
-    object Loading : SelectOrderItemState()
-    data class Success(val message: String) : SelectOrderItemState()
-    data class Error(val message: String) : SelectOrderItemState()
+sealed class UpdateOrderItemState {
+    object Loading : UpdateOrderItemState()
+    data class Success(val message: String) : UpdateOrderItemState()
+    data class Error(val message: String) : UpdateOrderItemState()
 }
 sealed class UpdateOrderUserState {
     object Loading : UpdateOrderUserState()
     data class Success(val order_user : Order) : UpdateOrderUserState()
     data class Error(val message: String) : UpdateOrderUserState()
+}
+sealed class DeleteOrderItemState {
+    object Loading : DeleteOrderItemState()
+    data class Success(val message: String) : DeleteOrderItemState()
+    data class Error(val message: String) : DeleteOrderItemState()
 }

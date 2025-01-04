@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hau.carepointtmdt.model.Order
+import com.hau.carepointtmdt.model.Order_Item
 import com.hau.carepointtmdt.repository.MedicineRepository
 import com.hau.carepointtmdt.repository.OrderItemRepository
 import com.hau.carepointtmdt.repository.OrderRepository
@@ -21,11 +23,14 @@ class CartViewModel : ViewModel() {
     private val _getAllMedicine = MutableLiveData<GetMedicineState>()
     val getAllMedicine: LiveData<GetMedicineState> = _getAllMedicine
 
-    private val _selectOrderItem = MutableLiveData<SelectOrderItemState>()
-    val selectOrderItem: LiveData<SelectOrderItemState> = _selectOrderItem
+    private val _updateOrderItem = MutableLiveData<UpdateOrderItemState>()
+    val updateOrderItem: LiveData<UpdateOrderItemState> = _updateOrderItem
 
     private val _updateOrderUser = MutableLiveData<UpdateOrderUserState>()
     val updateOrderUser: LiveData<UpdateOrderUserState> = _updateOrderUser
+
+    private val _deleteOrderItem = MutableLiveData<DeleteOrderItemState>()
+    val deleteOrderItem: LiveData<DeleteOrderItemState> = _deleteOrderItem
 
     fun getOrderItemByOrderId(order_id: Int) {
         _orderItemByOrderId.value = GetOrderItemByOrderIdState.Loading
@@ -78,33 +83,33 @@ class CartViewModel : ViewModel() {
         }
     }
 
-    fun selectOrderItem(orderItem_id: Int, isSelected: Int) {
+    fun updateOrderItem(order_Item: Order_Item) {
         viewModelScope.launch {
-            _selectOrderItem.value = SelectOrderItemState.Loading
+            _updateOrderItem.value = UpdateOrderItemState.Loading
             try {
-                val response = orderItemRepository.selectOrderItem(orderItem_id, isSelected)
+                val response = orderItemRepository.updateOrderItem(order_Item)
                 if (response.isSuccessful && response.body() != null) {
                     val selectOrderItemResponse = response.body()!!
                     if (!selectOrderItemResponse.result.error) {
-                        _selectOrderItem.value =
-                            SelectOrderItemState.Success(selectOrderItemResponse.result.message)
+                        _updateOrderItem.value =
+                            UpdateOrderItemState.Success(selectOrderItemResponse.result.message)
                     } else {
-                        _selectOrderItem.value =
-                            SelectOrderItemState.Error(selectOrderItemResponse.result.message)
+                        _updateOrderItem.value =
+                            UpdateOrderItemState.Error(selectOrderItemResponse.result.message)
                     }
                 }
             } catch (e: Exception) {
-                _selectOrderItem.value = SelectOrderItemState.Error(e.message.toString())
+                _updateOrderItem.value = UpdateOrderItemState.Error(e.message.toString())
             }
         }
     }
 
-    fun updateOrderUser(order_id: Int, user_id: Int, totalPrice: Int, order_status: Int) {
+    fun updateOrderUser(order_user: Order) {
         viewModelScope.launch {
             _updateOrderUser.value = UpdateOrderUserState.Loading
             try {
                 val response =
-                    orderRepository.updateOrderUser(order_id, user_id, totalPrice, order_status)
+                    orderRepository.updateOrderUser(order_user)
                 if (response.isSuccessful && response.body() != null) {
                     val updateOrderUserResponse = response.body()!!
                     if (!updateOrderUserResponse.result.error) {
@@ -122,8 +127,27 @@ class CartViewModel : ViewModel() {
             } catch (e: Exception) {
                 _updateOrderUser.value = UpdateOrderUserState.Error(e.message.toString())
             }
-
         }
     }
 
+    fun deleteOrderItem(order_Item_id: Int) {
+        viewModelScope.launch {
+            _deleteOrderItem.value = DeleteOrderItemState.Loading
+            try {
+                val response = orderItemRepository.deleteOrderItem(order_Item_id)
+                if (response.isSuccessful && response.body() != null) {
+                    val deleteOrderItemResponse = response.body()!!
+                    if (!deleteOrderItemResponse.result.error) {
+                        _deleteOrderItem.value =
+                            DeleteOrderItemState.Success(deleteOrderItemResponse.result.message)
+                    } else {
+                        _deleteOrderItem.value =
+                            DeleteOrderItemState.Error(deleteOrderItemResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _deleteOrderItem.value = DeleteOrderItemState.Error(e.message.toString())
+            }
+        }
+    }
 }

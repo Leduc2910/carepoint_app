@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="12dp"
             android:gravity="center"
-            android:text="Giao hàng đến"
+            android:text="Giỏ hàng"
             android:textColor="@color/text_invert" />
 
         <ImageView
@@ -108,9 +108,9 @@
             style="@style/Text.Body18px.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/default_primary_btn"
+            android:background="@drawable/disbale_primary_btn"
             android:text="Mua hàng"
-            android:textColor="@color/text_invert"
+            android:textColor="@color/spe_text_lightGray"
             app:backgroundTint="@null" />
 
         <Button

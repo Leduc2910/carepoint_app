@@ -13,10 +13,10 @@ import com.squareup.picasso.Picasso
 
 class CartItemRV(
     private val mContext: Context,
-    private val orderItemLst: List<Order_Item>,
-    private val medicineLst: List<Medicine>, val cartViewModel: CartViewModel
+    private var orderItemLst: MutableList<Order_Item>,
+    private val medicineLst: List<Medicine>,
+    private val cartViewModel: CartViewModel
 ) : RecyclerView.Adapter<CartItemRV.CartItemViewHolder>() {
-
 
     inner class CartItemViewHolder(binding: LayoutCartItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -25,11 +25,12 @@ class CartItemRV(
         val txtCartMedQuantity = binding.txtCartQuantity
         val txtCartMedTotal = binding.txtCartPrice
         val cbSelectBuy = binding.cbSelectBuy
+        val btnMinusQuantity = binding.btnMinusQuantity
+        val btnPlusQuantity = binding.btnPlusQuantity
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
-        val binding =
-            LayoutCartItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
+        val binding = LayoutCartItemBinding.inflate(LayoutInflater.from(mContext), parent, false)
         return CartItemViewHolder(binding)
     }
 
@@ -39,28 +40,48 @@ class CartItemRV(
 
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val orderItem = orderItemLst[position]
+
+        // Tìm medicine tương ứng với orderItem
+        val medicine = medicineLst.firstOrNull { it.medicine_id == orderItem.medicine_id }
+
+        medicine?.let {
+            holder.txtCartMedName.text = it.medicine_name
+            holder.txtCartMedQuantity.text = orderItem.quantity.toString()
+            holder.txtCartMedTotal.text = DecimalFormat("#,###").format(orderItem.totalPrice) + " đ"
+            Picasso.get().load(it.medicine_img).into(holder.imgCartMed)
+        }
+
         holder.cbSelectBuy.isChecked = orderItem.isSelected == 2
 
-        for (medicine: Medicine in medicineLst) {
-            if (orderItem.medicine_id == medicine.medicine_id) {
-                holder.txtCartMedName.text = medicine.medicine_name
-                holder.txtCartMedQuantity.text = orderItem.quantity.toString()
-                holder.txtCartMedTotal.text =
-                    DecimalFormat("#,###").format(orderItem.totalPrice) + " đ"
-                Picasso.get().load(medicine.medicine_img).into(holder.imgCartMed)
-                break
+        holder.cbSelectBuy.setOnCheckedChangeListener { _, isChecked ->
+            orderItem.isSelected = if (isChecked) 2 else 1
+            orderItemLst[position] = orderItem
+            cartViewModel.updateOrderItem(orderItem)
+        }
+
+        holder.btnPlusQuantity.setOnClickListener {
+            medicine?.let { med ->
+                orderItem.quantity++
+                orderItem.totalPrice = med.medicine_price * orderItem.quantity
+                notifyItemChanged(position)
+                cartViewModel.updateOrderItem(orderItem)
             }
         }
 
-        holder.cbSelectBuy.setOnClickListener {
-            if (holder.cbSelectBuy.isChecked) {
-                orderItem.isSelected = 2
-                cartViewModel.selectOrderItem(orderItem.orderItem_id, 2)
-            } else {
-                orderItem.isSelected = 1
-                cartViewModel.selectOrderItem(orderItem.orderItem_id, 1)
+
+        holder.btnMinusQuantity.setOnClickListener {
+            medicine?.let { med ->
+                if (orderItem.quantity > 1) {
+                    orderItem.quantity--
+                    orderItem.totalPrice = med.medicine_price * orderItem.quantity
+                    notifyItemChanged(position)
+                    cartViewModel.updateOrderItem(orderItem)
+                }
             }
         }
     }
+    fun updateData(newOrderItemList: List<Order_Item>) {
+        this.orderItemLst = newOrderItemList.toMutableList()
+        notifyDataSetChanged()
+    }
 }
-

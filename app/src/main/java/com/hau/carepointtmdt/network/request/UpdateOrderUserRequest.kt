@@ -1,8 +1,7 @@
 package com.hau.carepointtmdt.network.request
 
+import com.hau.carepointtmdt.model.Order
+
 data class UpdateOrderUserRequest (
-    val order_id : Int,
-    val user_id : Int,
-    val totalPrice : Int,
-    val order_status : Int
+    val order_user : Order
 )
