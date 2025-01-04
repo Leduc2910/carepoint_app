@@ -3,6 +3,7 @@ package com.hau.carepointtmdt.network
 import com.hau.carepointtmdt.network.request.AddToCartRequest
 import com.hau.carepointtmdt.network.request.ChangePassRequest
 import com.hau.carepointtmdt.network.request.DeleteOrderItemRequest
+import com.hau.carepointtmdt.network.request.GetAddressByUserIdRequest
 import com.hau.carepointtmdt.network.request.GetMedicineByIdRequest
 import com.hau.carepointtmdt.network.request.GetOrderByStatusRequest
 import com.hau.carepointtmdt.network.request.GetOrderItemByOrderIdRequest
@@ -12,9 +13,13 @@ import com.hau.carepointtmdt.network.request.RegisterRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderItemRequest
 import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
+import com.hau.carepointtmdt.network.request.CreateAddressRequest
+import com.hau.carepointtmdt.network.request.UpdateAddressRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
 import com.hau.carepointtmdt.network.response.ChangePassResponse
+import com.hau.carepointtmdt.network.response.CreateAddressResponse
 import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
+import com.hau.carepointtmdt.network.response.GetAddressByUserIdResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
 import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.network.response.GetMedicineResponse
@@ -23,6 +28,7 @@ import com.hau.carepointtmdt.network.response.GetOrderItemByOrderIdResponse
 import com.hau.carepointtmdt.network.response.GetProductByCatalogueIdResponse
 import com.hau.carepointtmdt.network.response.LoginResponse
 import com.hau.carepointtmdt.network.response.RegisterResponse
+import com.hau.carepointtmdt.network.response.UpdateAddressResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderItemResponse
 import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
@@ -72,4 +78,13 @@ interface ApiService {
 
     @POST("deleteOrderItem.php")
     suspend fun deleteOrderItem(@Body request : DeleteOrderItemRequest) : Response<DeleteOrderItemResponse>
+
+    @POST
+    suspend fun getAddressByUserId(@Body request : GetAddressByUserIdRequest) : Response<GetAddressByUserIdResponse>
+
+    @POST
+    suspend fun createAddress(@Body request : CreateAddressRequest) : Response<CreateAddressResponse>
+
+    @POST
+    suspend fun updateAddress(@Body request : UpdateAddressRequest) : Response<UpdateAddressResponse>
 }

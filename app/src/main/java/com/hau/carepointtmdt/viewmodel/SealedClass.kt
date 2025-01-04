@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.viewmodel
 
+import com.hau.carepointtmdt.model.Address
 import com.hau.carepointtmdt.model.MedCatalogue
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
@@ -84,3 +85,19 @@ sealed class DeleteOrderItemState {
     data class Success(val message: String) : DeleteOrderItemState()
     data class Error(val message: String) : DeleteOrderItemState()
 }
+sealed class GetAddressByUserIdState {
+    object Loading : GetAddressByUserIdState()
+    data class Success(val addressLst: List<Address>) : GetAddressByUserIdState()
+    data class Error(val message: String) : GetAddressByUserIdState()
+}
+sealed class CreateAddressState {
+    object Loading : CreateAddressState()
+    data class Success(val message: String) : CreateAddressState()
+    data class Error(val message: String) : CreateAddressState()
+}
+sealed class UpdateAddressState {
+    object Loading : UpdateAddressState()
+    data class Success(val message: String) : UpdateAddressState()
+    data class Error(val message: String) : UpdateAddressState()
+}
+
