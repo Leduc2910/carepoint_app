@@ -14,6 +14,7 @@ import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.model.Order_Item
 import com.hau.carepointtmdt.model.User
+import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.view.adapter.CartItemRV
@@ -21,7 +22,7 @@ import com.hau.carepointtmdt.viewmodel.CartViewModel
 import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.GetOrderItemByOrderIdState
 import com.hau.carepointtmdt.viewmodel.SelectOrderItemState
-import com.hau.carepointtmdt.viewmodel.UpdateOrderPriceState
+import com.hau.carepointtmdt.viewmodel.UpdateOrderUserState
 
 class CartActivity : AppCompatActivity() {
 
@@ -57,7 +58,8 @@ class CartActivity : AppCompatActivity() {
         }
 
         if (order_user.totalPrice != 0) {
-            binding.btnOrder.text = "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
+            binding.btnOrder.text =
+                "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
         } else {
             binding.btnOrder.text = "Mua hàng"
         }
@@ -65,7 +67,7 @@ class CartActivity : AppCompatActivity() {
         getAllMedicineObservers()
         getOrderItemByOrderIdObservers()
         selectOrderItemObservers()
-        updateOrderPrice()
+        updateOrderUser()
         cartViewModel.getAllMedicine()
     }
 
@@ -139,7 +141,13 @@ class CartActivity : AppCompatActivity() {
                     for (orderItem: Order_Item in newOrderItemLst) {
                         totalPrice += orderItem.totalPrice
                     }
-                    cartViewModel.updateOrderPrice(order_user.order_id, totalPrice)
+                    order_user.totalPrice = totalPrice
+                    cartViewModel.updateOrderUser(
+                        order_user.order_id,
+                        order_user.user_id,
+                        order_user.totalPrice,
+                        order_user.order_status
+                    )
                 }
 
                 is SelectOrderItemState.Error -> {
@@ -151,28 +159,25 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateOrderPrice() {
-        cartViewModel.updateOrderPrice.observe(this) { state ->
+    private fun updateOrderUser() {
+        cartViewModel.updateOrderUser.observe(this) { state ->
             when (state) {
-                is UpdateOrderPriceState.Loading -> {
+                is UpdateOrderUserState.Loading -> {
 
                 }
-
-                is UpdateOrderPriceState.Success -> {
+                is UpdateOrderUserState.Success -> {
                     order_user = state.order_user
                     sharedPreferencesManager.saveOrder(state.order_user)
                     if (order_user.totalPrice != 0) {
-                        binding.btnOrder.text = "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
+                        binding.btnOrder.text =
+                            "Mua hàng (" + DecimalFormat("#,###").format(order_user.totalPrice) + " đ)"
                     } else {
                         binding.btnOrder.text = "Mua hàng"
                     }
                 }
+                is UpdateOrderUserState.Error -> {
 
-                is UpdateOrderPriceState.Error -> {
-                    Log.d("Update Order Price Error", state.message)
                 }
-
-                else -> {}
             }
         }
     }

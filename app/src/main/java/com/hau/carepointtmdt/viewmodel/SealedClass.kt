@@ -74,8 +74,8 @@ sealed class SelectOrderItemState {
     data class Success(val message: String) : SelectOrderItemState()
     data class Error(val message: String) : SelectOrderItemState()
 }
-sealed class UpdateOrderPriceState {
-    object Loading : UpdateOrderPriceState()
-    data class Success(val order_user : Order) : UpdateOrderPriceState()
-    data class Error(val message: String) : UpdateOrderPriceState()
+sealed class UpdateOrderUserState {
+    object Loading : UpdateOrderUserState()
+    data class Success(val order_user : Order) : UpdateOrderUserState()
+    data class Error(val message: String) : UpdateOrderUserState()
 }

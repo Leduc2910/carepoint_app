@@ -24,8 +24,8 @@ class CartViewModel : ViewModel() {
     private val _selectOrderItem = MutableLiveData<SelectOrderItemState>()
     val selectOrderItem: LiveData<SelectOrderItemState> = _selectOrderItem
 
-    private val _updateOrderPrice = MutableLiveData<UpdateOrderPriceState>()
-    val updateOrderPrice: LiveData<UpdateOrderPriceState> = _updateOrderPrice
+    private val _updateOrderUser = MutableLiveData<UpdateOrderUserState>()
+    val updateOrderUser: LiveData<UpdateOrderUserState> = _updateOrderUser
 
     fun getOrderItemByOrderId(order_id: Int) {
         _orderItemByOrderId.value = GetOrderItemByOrderIdState.Loading
@@ -99,33 +99,31 @@ class CartViewModel : ViewModel() {
         }
     }
 
-    fun updateOrderPrice(order_id: Int, totalPrice: Int) {
+    fun updateOrderUser(order_id: Int, user_id: Int, totalPrice: Int, order_status: Int) {
         viewModelScope.launch {
-            _updateOrderPrice.value = UpdateOrderPriceState.Loading
+            _updateOrderUser.value = UpdateOrderUserState.Loading
             try {
-                val response = orderRepository.updateOrderPrice(order_id, totalPrice)
+                val response =
+                    orderRepository.updateOrderUser(order_id, user_id, totalPrice, order_status)
                 if (response.isSuccessful && response.body() != null) {
-                    val updateOrderPriceResponse = response.body()!!
-                    if (!updateOrderPriceResponse.result.error) {
-                        _updateOrderPrice.value =
-                            updateOrderPriceResponse.order_user?.let {
-                                UpdateOrderPriceState.Success(
+                    val updateOrderUserResponse = response.body()!!
+                    if (!updateOrderUserResponse.result.error) {
+                        _updateOrderUser.value =
+                            updateOrderUserResponse.order_user?.let {
+                                UpdateOrderUserState.Success(
                                     it
                                 )
                             }
-
-
                     } else {
-                        _updateOrderPrice.value =
-                            UpdateOrderPriceState.Error(updateOrderPriceResponse.result.message)
+                        _updateOrderUser.value =
+                            UpdateOrderUserState.Error(updateOrderUserResponse.result.message)
                     }
-
                 }
-
             } catch (e: Exception) {
-                _updateOrderPrice.value = UpdateOrderPriceState.Error(e.message.toString())
+                _updateOrderUser.value = UpdateOrderUserState.Error(e.message.toString())
             }
-        }
 
+        }
     }
+
 }

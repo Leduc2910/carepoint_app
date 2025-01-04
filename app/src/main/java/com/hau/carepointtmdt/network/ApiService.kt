@@ -10,7 +10,7 @@ import com.hau.carepointtmdt.network.request.LoginRequest
 import com.hau.carepointtmdt.network.request.RegisterRequest
 import com.hau.carepointtmdt.network.request.SelectOrderItemRequest
 import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
-import com.hau.carepointtmdt.network.request.UpdateOrderPriceRequest
+import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
 import com.hau.carepointtmdt.network.response.ChangePassResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
@@ -23,7 +23,7 @@ import com.hau.carepointtmdt.network.response.LoginResponse
 import com.hau.carepointtmdt.network.response.RegisterResponse
 import com.hau.carepointtmdt.network.response.SelectOrderItemResponse
 import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
-import com.hau.carepointtmdt.network.response.UpdateOrderPriceResponse
+import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -65,6 +65,7 @@ interface ApiService {
     @POST("selectOrderItem.php")
     suspend fun selectOrderItem(@Body request : SelectOrderItemRequest) : Response<SelectOrderItemResponse>
 
-    @POST("updateOrderPrice.php")
-    suspend fun updateOrderPrice (@Body request : UpdateOrderPriceRequest) : Response<UpdateOrderPriceResponse>
+    @POST("updateOrderUser.php")
+    suspend fun updateOrderUser (@Body request : UpdateOrderUserRequest) : Response<UpdateOrderUserResponse>
+
 }
