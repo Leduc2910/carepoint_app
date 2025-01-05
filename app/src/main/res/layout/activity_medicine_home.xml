@@ -69,7 +69,7 @@
                             android:textColor="@color/text_invert" />
 
                         <TextView
-                            android:id="@+id/textView19"
+                            android:id="@+id/txtAddressMedHome"
                             style="@style/Text.Body16px.Medium"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

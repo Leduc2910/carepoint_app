@@ -17,6 +17,7 @@ import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.request.CreateAddressRequest
 import com.hau.carepointtmdt.network.request.UpdateAddressRequest
+import com.hau.carepointtmdt.network.request.UpdateQuantityMedicineRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
 import com.hau.carepointtmdt.network.response.ChangeOrderItemResponse
 import com.hau.carepointtmdt.network.response.ChangePassResponse
@@ -38,6 +39,7 @@ import com.hau.carepointtmdt.network.response.UpdateAddressResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderItemResponse
 import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
+import com.hau.carepointtmdt.network.response.UpdateQuantityMedicineResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -106,4 +108,7 @@ interface ApiService {
 
     @POST("changeOrderItem.php")
     suspend fun changeOrderItem(@Body request : ChangeOrderItemRequest) : Response<ChangeOrderItemResponse>
+
+    @POST("updateQuantityMedicine.php")
+    suspend fun updateQuantityMed(@Body request: UpdateQuantityMedicineRequest) : Response<UpdateQuantityMedicineResponse>
 }

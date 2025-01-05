@@ -106,7 +106,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_cate_default_2"
-            android:drawableLeft="@drawable/ic_sort"
+            android:drawableLeft="@drawable/ic_filter"
             android:drawableTint="@color/text_primary"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"

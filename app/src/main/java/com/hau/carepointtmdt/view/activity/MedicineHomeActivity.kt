@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityMedicineHomeBinding
+import com.hau.carepointtmdt.model.Address
 import com.hau.carepointtmdt.model.RecentMedSearch
+import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.CustomHorizontalDecoration
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
+import com.hau.carepointtmdt.validation.SharedPreferencesManager
 import com.hau.carepointtmdt.view.adapter.MedItem2RV
 import com.hau.carepointtmdt.view.adapter.RecentMedSearchRV
+import com.hau.carepointtmdt.viewmodel.GetAddressByUserIdState
 import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.MedicineHomeViewModel
 
@@ -30,6 +34,10 @@ class MedicineHomeActivity : AppCompatActivity() {
     private lateinit var rvNewStockMed: MedItem2RV
     private lateinit var rvAllMed: MedItem2RV
 
+    private lateinit var currentUser: User
+    lateinit var sharedPreferencesManager: SharedPreferencesManager
+
+    private var addressLst: List<Address>? = null
     private lateinit var recentMedSearchLst: ArrayList<RecentMedSearch>
 
     lateinit var imgRecentSearch: Array<Int>
@@ -42,7 +50,12 @@ class MedicineHomeActivity : AppCompatActivity() {
         binding = ActivityMedicineHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedPreferencesManager = SharedPreferencesManager(this)
+        currentUser = sharedPreferencesManager.getUser()!!
+
         dataInitialize()
+
+
 
         rvRecentSearh = RecentMedSearchRV(this, recentMedSearchLst)
         binding.rvRecentSearch.layoutManager =
@@ -62,9 +75,10 @@ class MedicineHomeActivity : AppCompatActivity() {
             finish()
         }
 
-
+        getAddressObservers()
         setupObserversGetAllMed()
         medHomeViewModel.getAllMedicine()
+        medHomeViewModel.getAddressByUserId(currentUser.user_id)
 
     }
 
@@ -76,6 +90,7 @@ class MedicineHomeActivity : AppCompatActivity() {
                     binding.prgBarNewStockMedicine.visibility = View.VISIBLE
                     binding.prgBarAllMedicine.visibility = View.VISIBLE
                 }
+
                 is GetMedicineState.Success -> {
                     binding.prgBarDiscountMedicine.visibility = View.GONE
                     binding.prgBarNewStockMedicine.visibility = View.GONE
@@ -103,7 +118,8 @@ class MedicineHomeActivity : AppCompatActivity() {
                     newStockMedicineLst = newStockMedicineLst.sortedByDescending { it.medicine_id }
                     Log.d("newStockMedicineLst", newStockMedicineLst.toString())
 
-                    binding.rvNewStockMedicine.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                    binding.rvNewStockMedicine.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                     binding.rvNewStockMedicine.addItemDecoration(
                         CustomHorizontalDecoration(
                             resources.getDimensionPixelSize(
@@ -128,7 +144,8 @@ class MedicineHomeActivity : AppCompatActivity() {
                     var allMedicineLst = state.medicineLst
                     allMedicineLst = allMedicineLst.shuffled()
 
-                    binding.rvAllMedicine.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                    binding.rvAllMedicine.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                     binding.rvAllMedicine.addItemDecoration(
                         CustomHorizontalDecoration(
                             resources.getDimensionPixelSize(
@@ -150,6 +167,7 @@ class MedicineHomeActivity : AppCompatActivity() {
                     }
 
                 }
+
                 is GetMedicineState.Error -> {
                     binding.prgBarDiscountMedicine.visibility = View.GONE
                     binding.prgBarNewStockMedicine.visibility = View.GONE
@@ -158,6 +176,35 @@ class MedicineHomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun getAddressObservers() {
+        medHomeViewModel.getAddressState.observe(this) { state ->
+            when (state) {
+                is GetAddressByUserIdState.Error -> {
+                    Log.d("Get Address Error", state.message)
+                    binding.txtAddressMedHome.visibility = View.GONE
+                }
+
+                GetAddressByUserIdState.Loading -> {
+
+                }
+
+                is GetAddressByUserIdState.Success -> {
+                    addressLst = state.addressLst
+                    if (!addressLst.isNullOrEmpty()) {
+                        binding.txtAddressMedHome.visibility = View.VISIBLE
+                        for (address in addressLst!!) {
+                            if (address.is_default == 1) {
+                                binding.txtAddressMedHome.text = address.address
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     private fun dataInitialize() {

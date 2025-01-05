@@ -42,6 +42,7 @@ import com.hau.carepointtmdt.viewmodel.GetPaymentMethodState
 import com.hau.carepointtmdt.viewmodel.UpdateAddressState
 import com.hau.carepointtmdt.viewmodel.UpdateOrderItemState
 import com.hau.carepointtmdt.viewmodel.UpdateOrderUserState
+import com.hau.carepointtmdt.viewmodel.UpdateQuantityMedState
 
 class CheckoutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckoutBinding
@@ -131,6 +132,7 @@ class CheckoutActivity : AppCompatActivity() {
         updateOrderUser()
         getOrderByStatusObservers()
         changeOrderItem()
+        updateQuantityMedObservers()
         checkoutViewModel.getAddressByUserId(currentUser.user_id)
         checkoutViewModel.getDelivery()
         checkoutViewModel.getAllMedicine()
@@ -597,6 +599,10 @@ class CheckoutActivity : AppCompatActivity() {
                     order_user.order_status = 2
                     checkoutViewModel.updateOrderUser(order_user)
 
+                    orderItemLst?.forEach { orderItem ->
+                        checkoutViewModel.updateQuantityMed(orderItem.medicine_id, orderItem.quantity)
+                    }
+
                     val order_detail = state.order_detail
                     val intent = Intent(this, OrderSuccessActivity::class.java)
                     intent.putExtra("orderDetail_id", order_detail.orderDetail_id)
@@ -661,6 +667,22 @@ class CheckoutActivity : AppCompatActivity() {
 
                 is ChangeOrderItemState.Success -> {
                     Log.d("Change Order Item ", state.message)
+                }
+            }
+        }
+    }
+
+    fun updateQuantityMedObservers() {
+        checkoutViewModel.updateQuantityMedState.observe(this) { state ->
+            when(state) {
+                is UpdateQuantityMedState.Error -> {
+                    Log.d("Update Quantity Med Error", state.message)
+                }
+                is UpdateQuantityMedState.Loading -> {
+
+                }
+                is UpdateQuantityMedState.Success -> {
+                    Log.d("Update Quantity Med", state.message)
                 }
             }
         }

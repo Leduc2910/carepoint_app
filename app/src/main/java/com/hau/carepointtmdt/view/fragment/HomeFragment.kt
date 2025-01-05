@@ -21,6 +21,7 @@ import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.validation.CustomHorizontalDecoration
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.databinding.FragmentHomeBinding
+import com.hau.carepointtmdt.model.Address
 import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.GridSpacingItemDecoration
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
@@ -31,6 +32,7 @@ import com.hau.carepointtmdt.view.adapter.HomeFunctionItemRecycleView
 import com.hau.carepointtmdt.view.adapter.HomeQuickTestRV
 import com.hau.carepointtmdt.view.adapter.HomeSpecialtyItemRV
 import com.hau.carepointtmdt.view.adapter.MedItemRV
+import com.hau.carepointtmdt.viewmodel.GetAddressByUserIdState
 import com.hau.carepointtmdt.viewmodel.GetAllCatalogueState
 import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.GetProductByCatalogueIdState
@@ -51,6 +53,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeBlogAdapter: HomeBlogItemRV
     private lateinit var homeMedIAdapter: MedItemRV
 
+    private var addressLst: List<Address>? = null
     private lateinit var homeFuncItemLst: ArrayList<HomeFuncItem>
     private lateinit var specialtyItemLst: ArrayList<HomeSpecialtyItem>
     private lateinit var homeDoctorItemLst: ArrayList<HomeDoctorItem>
@@ -135,7 +138,9 @@ class HomeFragment : Fragment() {
 
         setupObserversCatalogueLst()
         setupObserversMedicineLst()
+        getAddressObservers()
         homeViewModel.getAllCatalogue()
+        homeViewModel.getAddressByUserId(currentUser.user_id)
 
         binding.btnGoToMedicineHome.setOnClickListener {
             val intent = Intent(requireContext(), MedicineHomeActivity::class.java)
@@ -174,7 +179,8 @@ class HomeFragment : Fragment() {
 
                     homeViewModel.getProductByCatalogueId(homeMedCatalogueLst[0].pCatalogue_id)
 
-                    binding.tblCateMed.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                    binding.tblCateMed.addOnTabSelectedListener(object :
+                        TabLayout.OnTabSelectedListener {
                         override fun onTabSelected(tab: TabLayout.Tab?) {
                             val catalogueId = tab?.tag as? Int
                             if (catalogueId != null) {
@@ -219,7 +225,7 @@ class HomeFragment : Fragment() {
                     while (binding.rvMedHome.itemDecorationCount > 0) {
                         binding.rvMedHome.removeItemDecorationAt(0)
                     }
-                    binding.rvMedHome.addItemDecoration(GridSpacingItemDecoration( 2, space))
+                    binding.rvMedHome.addItemDecoration(GridSpacingItemDecoration(2, space))
                     homeMedIAdapter = homeMedItemLst?.let { MedItemRV(requireContext(), it) }!!
                     binding.rvMedHome.adapter = homeMedIAdapter
                 }
@@ -230,6 +236,36 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getAddressObservers() {
+        homeViewModel.getAddressState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is GetAddressByUserIdState.Error -> {
+                    Log.d("Get Address Error", state.message)
+                    binding.frameHoverAddressHome.visibility = View.GONE
+                }
+
+                GetAddressByUserIdState.Loading -> {
+
+                }
+
+                is GetAddressByUserIdState.Success -> {
+                    addressLst = state.addressLst
+
+                    if (!addressLst.isNullOrEmpty()) {
+                        binding.frameHoverAddressHome.visibility = View.VISIBLE
+                        for (address in addressLst!!) {
+                            if (address.is_default == 1) {
+                                binding.txtHomeUserAddress.text = address.address
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
 

@@ -55,6 +55,9 @@ class CheckOutViewModel : ViewModel() {
     private val _changeOrderItemState = MutableLiveData<ChangeOrderItemState>()
     val changeOrderItemState: LiveData<ChangeOrderItemState> = _changeOrderItemState
 
+    private val _updateQuantityMedState = MutableLiveData<UpdateQuantityMedState>()
+    val updateQuantityMedState: LiveData<UpdateQuantityMedState> = _updateQuantityMedState
+
     fun getAddressByUserId(user_id: Int) {
         viewModelScope.launch {
             _getAddressState.value = GetAddressByUserIdState.Loading
@@ -341,6 +344,27 @@ class CheckOutViewModel : ViewModel() {
                 _changeOrderItemState.value = ChangeOrderItemState.Error(e.message.toString())
             }
 
+        }
+    }
+
+    fun updateQuantityMed(medicineId: Int, quantity: Int) {
+        viewModelScope.launch {
+            _updateQuantityMedState.value = UpdateQuantityMedState.Loading
+            try {
+                val response = medicineRepository.updateQuantityMed(medicineId, quantity)
+                if (response.isSuccessful && response.body() != null) {
+                    val updateQuantityMedResponse = response.body()!!
+                    if (!updateQuantityMedResponse.result.error) {
+                        _updateQuantityMedState.value =
+                            UpdateQuantityMedState.Success(updateQuantityMedResponse.result.message)
+                    } else {
+                        _updateQuantityMedState.value =
+                            UpdateQuantityMedState.Error(updateQuantityMedResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _updateQuantityMedState.value = UpdateQuantityMedState.Error(e.message.toString())
+            }
         }
     }
 }

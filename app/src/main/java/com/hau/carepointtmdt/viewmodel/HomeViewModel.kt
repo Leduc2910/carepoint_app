@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hau.carepointtmdt.repository.AddressRepository
 import com.hau.carepointtmdt.repository.MedCatalogueRepository
 import com.hau.carepointtmdt.repository.MedicineRepository
 import kotlinx.coroutines.launch
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
     private val medCataRepo = MedCatalogueRepository()
     private val medRepo = MedicineRepository()
+    private val addressRepository = AddressRepository()
 
     private val _getAllCatalogueState = MutableLiveData<GetAllCatalogueState>()
     val getAllCatalogueState: LiveData<GetAllCatalogueState> = _getAllCatalogueState
@@ -18,6 +20,9 @@ class HomeViewModel : ViewModel() {
     private val _getProductByCatalogueIdState = MutableLiveData<GetProductByCatalogueIdState>()
     val getProductByCatalogueIdState: LiveData<GetProductByCatalogueIdState> =
         _getProductByCatalogueIdState
+
+    private val _getAddressState = MutableLiveData<GetAddressByUserIdState>()
+    val getAddressState: LiveData<GetAddressByUserIdState> = _getAddressState
 
 
     fun getAllCatalogue() {
@@ -66,6 +71,28 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    fun getAddressByUserId(user_id: Int) {
+        viewModelScope.launch {
+            _getAddressState.value = GetAddressByUserIdState.Loading
+            try {
+                val response = addressRepository.getAddressByUserId(user_id)
+                if (response.isSuccessful && response.body() != null) {
+                    val getAddressResponse = response.body()!!
+                    if (!getAddressResponse.result.error) {
+                        _getAddressState.value =
+                            getAddressResponse.addressLst?.let { GetAddressByUserIdState.Success(it) }
+                    } else {
+                        _getAddressState.value =
+                            getAddressResponse.result.message.let { GetAddressByUserIdState.Error(it) }
+                    }
+
+                }
+            } catch (e: Exception) {
+                _getAddressState.value = GetAddressByUserIdState.Error(e.message.toString())
+
+            }
+        }
+    }
 }
 
 

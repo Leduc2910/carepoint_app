@@ -122,5 +122,10 @@ sealed class ChangeOrderItemState {
     object Loading : ChangeOrderItemState()
     data class Success(val message: String) : ChangeOrderItemState()
     data class Error(val message: String) : ChangeOrderItemState()
+}
 
+sealed class UpdateQuantityMedState {
+    object Loading : UpdateQuantityMedState()
+    data class Success(val message: String) : UpdateQuantityMedState()
+    data class Error(val message: String) : UpdateQuantityMedState()
 }
