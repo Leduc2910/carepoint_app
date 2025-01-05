@@ -114,6 +114,13 @@ class DetailMedicineActivity : AppCompatActivity() {
                         binding.btnBuyNow2.visibility = View.GONE
                     }
 
+                    binding.btnBuyNow.setOnClickListener {
+                        dataInitModalBuyMed(medicine)
+                        binding.frameBuyMedicine.visibility = View.VISIBLE
+                        binding.btnBuyNow2.visibility = View.VISIBLE
+                        binding.btnAddtoCart2.visibility = View.GONE
+                    }
+
                     binding.btnMinusQuantity.setOnClickListener {
                         if (currentBuyQuantity > 1) {
                             currentBuyQuantity--
@@ -133,14 +140,16 @@ class DetailMedicineActivity : AppCompatActivity() {
                         binding.frameBuyMedicine.visibility = View.GONE
                         Toast.makeText(this, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT)
                             .show()
-                    }
-                    binding.btnAddtoCart2.setOnClickListener {
                         detailMedViewModel.addToCart(
                             medicine.medicine_id,
                             order_user.order_id,
                             currentBuyQuantity
                         )
                     }
+                    binding.btnBuyNow2.setOnClickListener {
+
+                    }
+
                 }
 
                 is DetailMedicineState.Error -> {

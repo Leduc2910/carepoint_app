@@ -5,7 +5,9 @@ import com.hau.carepointtmdt.model.Delivery
 import com.hau.carepointtmdt.model.MedCatalogue
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
+import com.hau.carepointtmdt.model.Order_Detail
 import com.hau.carepointtmdt.model.Order_Item
+import com.hau.carepointtmdt.model.PaymentMethod
 import com.hau.carepointtmdt.model.User
 
 sealed class GetAllCatalogueState {
@@ -106,4 +108,19 @@ sealed class GetDeliveryState {
     data class Success(val deliveryLst: List<Delivery>) : GetDeliveryState()
     data class Error(val message: String) : GetDeliveryState()
 }
+sealed class GetPaymentMethodState {
+    object Loading : GetPaymentMethodState()
+    data class Success(val paymentMethodLst: List<PaymentMethod>) : GetPaymentMethodState()
+    data class Error(val message: String) : GetPaymentMethodState()
+}
+sealed class CheckoutState {
+    object Loading : CheckoutState()
+    data class Success(val order_detail: Order_Detail) : CheckoutState()
+    data class Error(val message: String) : CheckoutState()
+}
+sealed class ChangeOrderItemState {
+    object Loading : ChangeOrderItemState()
+    data class Success(val message: String) : ChangeOrderItemState()
+    data class Error(val message: String) : ChangeOrderItemState()
 
+}

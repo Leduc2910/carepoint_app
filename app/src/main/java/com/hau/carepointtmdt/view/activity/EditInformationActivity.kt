@@ -16,6 +16,8 @@ import androidx.core.content.ContextCompat
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityEditInformationBinding
@@ -25,6 +27,7 @@ import com.hau.carepointtmdt.viewmodel.UpdateInfoUserState
 import com.hau.carepointtmdt.viewmodel.UpdateInfoUserViewModel
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -81,9 +84,26 @@ class EditInformationActivity : AppCompatActivity() {
 
         binding.slBirthday.setOnClickListener {
             if (isEditMode) {
-                val datePicker =
-                    MaterialDatePicker.Builder.datePicker().setTitleText("Chọn ngày sinh")
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build()
+                val calendar = Calendar.getInstance()
+
+                val today = calendar.timeInMillis
+
+                calendar.add(Calendar.YEAR, -18)
+                val maxDate = calendar.timeInMillis
+
+                calendar.add(Calendar.YEAR, -82)
+                val minDate = calendar.timeInMillis
+
+                val constraintsBuilder = CalendarConstraints.Builder()
+                    .setStart(minDate)
+                    .setEnd(today)
+                    .setValidator(DateValidatorPointBackward.now())
+
+                val datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Chọn ngày sinh")
+                    .setCalendarConstraints(constraintsBuilder.build())
+                    .setSelection(maxDate)
+                    .build()
 
                 datePicker.show(supportFragmentManager, "MATERIAL_DATE_PICKER")
 
@@ -93,6 +113,7 @@ class EditInformationActivity : AppCompatActivity() {
                 }
             }
         }
+
 
         binding.edtUserName.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
             if (!b) {
@@ -129,6 +150,17 @@ class EditInformationActivity : AppCompatActivity() {
                 binding.txtErrorBirthdayInfo.visibility = View.VISIBLE
                 binding.txtErrorBirthdayInfo.text = "Vui lòng chọn ngày sinh của bạn!"
                 hasError = true
+            } else {
+                val birthdayDate = dateFormat.parse(birthdayTxt)
+                val currentDate = Calendar.getInstance().time
+                val diff = currentDate.time - birthdayDate.time
+                val age = (diff / (1000L * 60 * 60 * 24 * 365)).toInt()
+
+                if (age < 18) {
+                    binding.txtErrorBirthdayInfo.visibility = View.VISIBLE
+                    binding.txtErrorBirthdayInfo.text = "Bạn phải từ 18 tuổi trở lên để cập nhật thông tin!"
+                    hasError = true
+                }
             }
 
             if (hasError)
@@ -261,6 +293,7 @@ class EditInformationActivity : AppCompatActivity() {
     }
 
     private fun disableField() {
+        isEditMode= false
         binding.edtUserName.isEnabled = false
         binding.edtUserName.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
         binding.rdMale.isEnabled = false
@@ -272,6 +305,7 @@ class EditInformationActivity : AppCompatActivity() {
     }
 
     private fun enableField() {
+        isEditMode= true
         binding.edtUserName.isEnabled = true
         binding.edtUserName.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
         binding.rdMale.isEnabled = true

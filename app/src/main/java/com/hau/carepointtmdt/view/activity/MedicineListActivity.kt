@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,8 @@ class MedicineListActivity : AppCompatActivity() {
         val type = object : TypeToken<ArrayList<Medicine>>() {}.type
         medicineLst = gson.fromJson(jsonMedicineList, type)
 
+        binding.txtProductQuantity.text = medicineLst.size.toString() + " Sản phẩm"
+
         binding.rvMedListByTitle.layoutManager = GridLayoutManager(this, 2)
         while (binding.rvMedListByTitle.itemDecorationCount > 0) {
             binding.rvMedListByTitle.removeItemDecorationAt(0)
@@ -47,6 +50,8 @@ class MedicineListActivity : AppCompatActivity() {
         binding.rvMedListByTitle.adapter = rvMedicineList
 
         binding.btnBackToMedHome.setOnClickListener {
+            val intent = Intent(this, MedicineHomeActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }

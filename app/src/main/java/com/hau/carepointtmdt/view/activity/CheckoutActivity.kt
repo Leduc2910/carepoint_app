@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.view.activity
 
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.os.Debug
@@ -19,6 +20,7 @@ import com.hau.carepointtmdt.model.Delivery
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.model.Order_Item
+import com.hau.carepointtmdt.model.PaymentMethod
 import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
@@ -26,13 +28,20 @@ import com.hau.carepointtmdt.validation.ValidateData
 import com.hau.carepointtmdt.view.adapter.AddressItemRV
 import com.hau.carepointtmdt.view.adapter.DeliveryItemRV
 import com.hau.carepointtmdt.view.adapter.MedItem3RV
+import com.hau.carepointtmdt.view.adapter.PaymentMethodRV
+import com.hau.carepointtmdt.viewmodel.ChangeOrderItemState
 import com.hau.carepointtmdt.viewmodel.CheckOutViewModel
+import com.hau.carepointtmdt.viewmodel.CheckoutState
 import com.hau.carepointtmdt.viewmodel.CreateAddressState
 import com.hau.carepointtmdt.viewmodel.GetAddressByUserIdState
 import com.hau.carepointtmdt.viewmodel.GetDeliveryState
 import com.hau.carepointtmdt.viewmodel.GetMedicineState
+import com.hau.carepointtmdt.viewmodel.GetOrderByStatusState
 import com.hau.carepointtmdt.viewmodel.GetOrderItemByOrderIdState
+import com.hau.carepointtmdt.viewmodel.GetPaymentMethodState
 import com.hau.carepointtmdt.viewmodel.UpdateAddressState
+import com.hau.carepointtmdt.viewmodel.UpdateOrderItemState
+import com.hau.carepointtmdt.viewmodel.UpdateOrderUserState
 
 class CheckoutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckoutBinding
@@ -43,13 +52,17 @@ class CheckoutActivity : AppCompatActivity() {
     private lateinit var addressItemRV: AddressItemRV
     private lateinit var deliveryItemRV: DeliveryItemRV
     private lateinit var medItem3RV: MedItem3RV
+    private lateinit var paymentMethodRV: PaymentMethodRV
 
     private var addressLst: List<Address>? = null
     private var deliveryLst: List<Delivery>? = null
+    private var paymentMethodLst: List<PaymentMethod>? = null
     private var orderItemLst: List<Order_Item>? = null
     private var medicineLst: List<Medicine>? = null
+
     var selectedAddress: Address? = null
     var selectedDelivery: Delivery? = null
+    var selectedPaymentMethod: PaymentMethod? = null
 
     private lateinit var currentUser: User
     private lateinit var order_user: Order
@@ -113,9 +126,15 @@ class CheckoutActivity : AppCompatActivity() {
         getDeliveryObservers()
         getMedicineObservers()
         getOrderItemObservers()
+        getPaymentMethod()
+        checkoutObservers()
+        updateOrderUser()
+        getOrderByStatusObservers()
+        changeOrderItem()
         checkoutViewModel.getAddressByUserId(currentUser.user_id)
         checkoutViewModel.getDelivery()
         checkoutViewModel.getAllMedicine()
+        checkoutViewModel.getPaymentMethod()
 
         binding.btnBackCheckout.setOnClickListener {
             finish()
@@ -213,7 +232,21 @@ class CheckoutActivity : AppCompatActivity() {
                 Toast.makeText(this, "Vui lòng chọn hình thức vận chuyển!", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
+            } else if (selectedPaymentMethod == null) {
+                Toast.makeText(this, "Vui lòng chọn phương thức thanh toán!", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
             }
+
+            checkoutViewModel.checkout(
+                order_user.order_id,
+                selectedAddress!!.address_id,
+                currentUser.user_id,
+                selectedDelivery!!.delivery_id,
+                selectedPaymentMethod!!.method_id,
+                (order_user.totalPrice + selectedDelivery!!.delivery_price),
+                1
+            )
         }
         binding.btnBuyMore.setOnClickListener {
             finish()
@@ -504,6 +537,131 @@ class CheckoutActivity : AppCompatActivity() {
                 }
 
                 else -> {}
+            }
+        }
+    }
+
+    fun getPaymentMethod() {
+        checkoutViewModel.getPaymentMethod.observe(this) { state ->
+            when (state) {
+                is GetPaymentMethodState.Loading -> {
+                    binding.prgBarLoadPaymentMethod.visibility = View.VISIBLE
+                }
+
+                is GetPaymentMethodState.Success -> {
+                    binding.prgBarLoadPaymentMethod.visibility = View.GONE
+                    paymentMethodLst = state.paymentMethodLst
+
+                    val paymentUseLst = paymentMethodLst!!.filter { it.isEnabled == 1 }
+
+                    paymentMethodRV = PaymentMethodRV(this, paymentUseLst) { paymentMethod ->
+                        selectedPaymentMethod = paymentMethod
+                    }
+                    binding.rvPaymentMethod.layoutManager =
+                        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    while (binding.rvPaymentMethod.itemDecorationCount > 0) {
+                        binding.rvPaymentMethod.removeItemDecorationAt(0)
+                    }
+                    binding.rvPaymentMethod.addItemDecoration(
+                        CustomVerticalDecoration(
+                            resources.getDimensionPixelSize(
+                                R.dimen.spacing_12dp
+                            ), resources.getDimensionPixelSize(R.dimen.spacing_0dp)
+                        )
+                    )
+                    binding.rvPaymentMethod.adapter = paymentMethodRV
+                }
+
+                is GetPaymentMethodState.Error -> {
+                    binding.prgBarLoadPaymentMethod.visibility = View.GONE
+                    Log.d("Get Payment Error", state.message)
+                }
+
+                else -> {}
+            }
+        }
+    }
+
+    fun checkoutObservers() {
+        checkoutViewModel.checkoutState.observe(this) { state ->
+            when (state) {
+                is CheckoutState.Error -> {
+                    Log.d("Checkout Error", state.message)
+                }
+
+                is CheckoutState.Loading -> {
+                }
+
+                is CheckoutState.Success -> {
+
+                    order_user.order_status = 2
+                    checkoutViewModel.updateOrderUser(order_user)
+
+                    val order_detail = state.order_detail
+                    val intent = Intent(this, OrderSuccessActivity::class.java)
+                    intent.putExtra("orderDetail_id", order_detail.orderDetail_id)
+                    startActivity(intent)
+                    Log.d("Checkout", state.order_detail.toString())
+                }
+            }
+
+        }
+    }
+
+    private fun updateOrderUser() {
+        checkoutViewModel.updateOrderUser.observe(this) { state ->
+            when (state) {
+                is UpdateOrderUserState.Loading -> {
+
+                }
+
+                is UpdateOrderUserState.Success -> {
+                    order_user = state.order_user
+                    sharedPreferencesManager.clearOrder()
+
+                    checkoutViewModel.getOrderByStatus(currentUser.user_id, 1)
+                }
+
+                is UpdateOrderUserState.Error -> {
+
+                }
+            }
+        }
+    }
+
+    private fun getOrderByStatusObservers() {
+        checkoutViewModel.orderState.observe(this) { state ->
+            when (state) {
+                is GetOrderByStatusState.Loading -> {
+
+                }
+
+                is GetOrderByStatusState.Success -> {
+                    sharedPreferencesManager.saveOrder(state.order)
+
+                    checkoutViewModel.changeOrderItem(order_user.order_id, state.order.order_id)
+                }
+
+                is GetOrderByStatusState.Error -> {
+
+                }
+            }
+        }
+    }
+
+    private fun changeOrderItem() {
+        checkoutViewModel.changeOrderItemState.observe(this) { state ->
+            when (state) {
+                is ChangeOrderItemState.Error -> {
+                    Log.d("Change Order Item Error", state.message)
+                }
+
+                ChangeOrderItemState.Loading -> {
+                }
+
+                is ChangeOrderItemState.Success -> {
+                    Log.d("Change Order Item ", state.message)
+                }
             }
         }
     }

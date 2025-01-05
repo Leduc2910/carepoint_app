@@ -7,7 +7,6 @@ data class Medicine(
     val medicine_unit: String,
     val medicine_img: String,
     val med_category: MedCategory,
-    val discount: Int,
     val dosage_form: String,
     val manufacturer: String,
     val origin: String,

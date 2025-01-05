@@ -1,21 +1,27 @@
 package com.hau.carepointtmdt.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hau.carepointtmdt.model.Address
+import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.repository.AddressRepository
 import com.hau.carepointtmdt.repository.DeliveryRepository
 import com.hau.carepointtmdt.repository.MedicineRepository
 import com.hau.carepointtmdt.repository.OrderItemRepository
+import com.hau.carepointtmdt.repository.OrderRepository
+import com.hau.carepointtmdt.repository.PaymentMethodRepository
 import kotlinx.coroutines.launch
 
 class CheckOutViewModel : ViewModel() {
     private val addressRepository = AddressRepository()
     private val deliveryRepository = DeliveryRepository()
     private val orderItemRepository = OrderItemRepository()
+    private val orderRepository = OrderRepository()
     private val medicineRepository = MedicineRepository()
+    private val paymentMethodRepository = PaymentMethodRepository()
 
     private val _getAddressState = MutableLiveData<GetAddressByUserIdState>()
     val getAddressState: LiveData<GetAddressByUserIdState> = _getAddressState
@@ -34,6 +40,20 @@ class CheckOutViewModel : ViewModel() {
 
     private val _getAllMedicine = MutableLiveData<GetMedicineState>()
     val getAllMedicine: LiveData<GetMedicineState> = _getAllMedicine
+
+    private val _getPaymentMethod = MutableLiveData<GetPaymentMethodState>()
+    val getPaymentMethod: LiveData<GetPaymentMethodState> = _getPaymentMethod
+
+    private val _checkoutState = MutableLiveData<CheckoutState>()
+    val checkoutState: LiveData<CheckoutState> = _checkoutState
+    private val _updateOrderUser = MutableLiveData<UpdateOrderUserState>()
+    val updateOrderUser: LiveData<UpdateOrderUserState> = _updateOrderUser
+
+    private val _orderState = MutableLiveData<GetOrderByStatusState>()
+    val orderState: LiveData<GetOrderByStatusState> = _orderState
+
+    private val _changeOrderItemState = MutableLiveData<ChangeOrderItemState>()
+    val changeOrderItemState: LiveData<ChangeOrderItemState> = _changeOrderItemState
 
     fun getAddressByUserId(user_id: Int) {
         viewModelScope.launch {
@@ -164,6 +184,7 @@ class CheckOutViewModel : ViewModel() {
         }
 
     }
+
     fun getAllMedicine() {
         viewModelScope.launch {
             _getAllMedicine.value = GetMedicineState.Loading
@@ -185,6 +206,141 @@ class CheckOutViewModel : ViewModel() {
             } catch (e: Exception) {
                 _getAllMedicine.value = GetMedicineState.Error(e.message.toString())
             }
+        }
+    }
+
+    fun getPaymentMethod() {
+        viewModelScope.launch {
+            _getPaymentMethod.value = GetPaymentMethodState.Loading
+            try {
+                val response = paymentMethodRepository.getPaymentMethod()
+                if (response.isSuccessful && response.body() != null) {
+                    val getAllPaymentMethodResponse = response.body()!!
+                    if (!getAllPaymentMethodResponse.result.error) {
+                        _getPaymentMethod.value =
+                            getAllPaymentMethodResponse.paymentMethodLst?.let {
+                                GetPaymentMethodState.Success(
+                                    it
+                                )
+                            }
+                    } else {
+                        _getPaymentMethod.value =
+                            GetPaymentMethodState.Error(getAllPaymentMethodResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _getPaymentMethod.value = GetPaymentMethodState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun checkout(
+        order_id: Int,
+        address_id: Int,
+        user_id: Int,
+        delivery_id: Int,
+        method_id: Int,
+        totalPrice: Int,
+        status: Int
+    ) {
+        viewModelScope.launch {
+            _checkoutState.value = CheckoutState.Loading
+            try {
+                val response = orderRepository.checkout(
+                    order_id,
+                    address_id,
+                    user_id,
+                    delivery_id,
+                    method_id,
+                    totalPrice,
+                    status
+                )
+                if (response.isSuccessful && response.body() != null) {
+                    val checkoutResponse = response.body()!!
+                    if (!checkoutResponse.result.error) {
+                        _checkoutState.value =
+                            checkoutResponse.order_detail?.let { CheckoutState.Success(it) }
+                    } else {
+                        _checkoutState.value = CheckoutState.Error(checkoutResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _checkoutState.value = CheckoutState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun updateOrderUser(order_user: Order) {
+        viewModelScope.launch {
+            _updateOrderUser.value = UpdateOrderUserState.Loading
+            try {
+                val response =
+                    orderRepository.updateOrderUser(order_user)
+                if (response.isSuccessful && response.body() != null) {
+                    val updateOrderUserResponse = response.body()!!
+                    if (!updateOrderUserResponse.result.error) {
+                        _updateOrderUser.value =
+                            updateOrderUserResponse.order_user?.let {
+                                UpdateOrderUserState.Success(
+                                    it
+                                )
+                            }
+                    } else {
+                        _updateOrderUser.value =
+                            UpdateOrderUserState.Error(updateOrderUserResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _updateOrderUser.value = UpdateOrderUserState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun getOrderByStatus(userId: Int, orderStatus: Int) {
+        viewModelScope.launch {
+            _orderState.value = GetOrderByStatusState.Loading
+            try {
+                val response = orderRepository.getOrderByStatus(userId, orderStatus)
+                if (response.isSuccessful && response.body() != null) {
+                    val getOrderByStatusResponse = response.body()!!
+                    if (!getOrderByStatusResponse.result.error) {
+                        _orderState.value = getOrderByStatusResponse.order_user?.let {
+                            GetOrderByStatusState.Success(
+                                it
+                            )
+                        }
+                        Log.d("order", getOrderByStatusResponse.order_user.toString())
+                    } else {
+                        _orderState.value =
+                            GetOrderByStatusState.Error(getOrderByStatusResponse.result.message)
+                    }
+                }
+            } catch (e: Exception) {
+                _orderState.value = GetOrderByStatusState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun changeOrderItem(order_id: Int, newOrder_id: Int) {
+        viewModelScope.launch {
+            _changeOrderItemState.value = ChangeOrderItemState.Loading
+            try {
+                val response = orderItemRepository.changeOrderItem(order_id, newOrder_id)
+                if (response.isSuccessful && response.body() != null) {
+                    val changeOrderItemResponse = response.body()!!
+                    if (!changeOrderItemResponse.result.error) {
+                        _changeOrderItemState.value =
+                            ChangeOrderItemState.Success(changeOrderItemResponse.result.message)
+                    } else {
+                        _changeOrderItemState.value =
+                            ChangeOrderItemState.Error(changeOrderItemResponse.result.message)
+                    }
+
+                }
+            } catch (e: Exception) {
+                _changeOrderItemState.value = ChangeOrderItemState.Error(e.message.toString())
+            }
+
         }
     }
 }

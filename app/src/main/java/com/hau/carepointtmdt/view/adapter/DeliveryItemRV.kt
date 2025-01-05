@@ -45,7 +45,6 @@ class DeliveryItemRV(
 
         holder.rdSelectDelivery.setOnClickListener {
             onDeliverySelected(delivery)
-            // (mContext as CheckoutActivity).selectedDelivery = delivery
 
             notifyDataSetChanged()
         }

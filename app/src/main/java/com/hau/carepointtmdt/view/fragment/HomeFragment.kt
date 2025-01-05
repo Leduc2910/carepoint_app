@@ -210,7 +210,7 @@ class HomeFragment : Fragment() {
 
                 is GetProductByCatalogueIdState.Success -> {
                     binding.prgBarLoadHomeMed.visibility = View.GONE
-                    var homeMedItemLst = state.medicineLst?.take(10)
+                    var homeMedItemLst = state.medicineLst?.take(8)
 
                     homeMedItemLst = homeMedItemLst?.shuffled()
 

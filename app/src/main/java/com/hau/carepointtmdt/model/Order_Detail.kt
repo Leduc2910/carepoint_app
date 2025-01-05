@@ -1,5 +1,7 @@
 package com.hau.carepointtmdt.model
 
+import java.util.Date
+
 data class Order_Detail(
     val orderDetail_id: Int,
     val order_id: Int,
@@ -8,5 +10,6 @@ data class Order_Detail(
     val delivery_id: Int,
     val method_id: Int,
     val totalPrice: Int,
-    val status: Int
+    val status: Int,
+    val create_at: Date
 )

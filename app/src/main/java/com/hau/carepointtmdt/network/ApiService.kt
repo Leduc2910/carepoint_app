@@ -1,7 +1,9 @@
 package com.hau.carepointtmdt.network
 
 import com.hau.carepointtmdt.network.request.AddToCartRequest
+import com.hau.carepointtmdt.network.request.ChangeOrderItemRequest
 import com.hau.carepointtmdt.network.request.ChangePassRequest
+import com.hau.carepointtmdt.network.request.CheckoutRequest
 import com.hau.carepointtmdt.network.request.DeleteOrderItemRequest
 import com.hau.carepointtmdt.network.request.GetAddressByUserIdRequest
 import com.hau.carepointtmdt.network.request.GetMedicineByIdRequest
@@ -16,11 +18,14 @@ import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.request.CreateAddressRequest
 import com.hau.carepointtmdt.network.request.UpdateAddressRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
+import com.hau.carepointtmdt.network.response.ChangeOrderItemResponse
 import com.hau.carepointtmdt.network.response.ChangePassResponse
+import com.hau.carepointtmdt.network.response.CheckoutResponse
 import com.hau.carepointtmdt.network.response.CreateAddressResponse
 import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetAddressByUserIdResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
+import com.hau.carepointtmdt.network.response.GetAllPaymentMethodResponse
 import com.hau.carepointtmdt.network.response.GetDeliveryResponse
 import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.network.response.GetMedicineResponse
@@ -35,6 +40,7 @@ import com.hau.carepointtmdt.network.response.UpdateInfoUserResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -89,6 +95,15 @@ interface ApiService {
     @POST("updateAddress.php")
     suspend fun updateAddress(@Body request : UpdateAddressRequest) : Response<UpdateAddressResponse>
 
-    @POST ("getAllDelivery.php")
+    @GET ("getAllDelivery.php")
     suspend fun getDelivery() : Response<GetDeliveryResponse>
+
+    @GET ("getPaymentMethod.php")
+    suspend fun getPaymentMethod() : Response<GetAllPaymentMethodResponse>
+
+    @POST("checkout.php")
+    suspend fun checkout(@Body request : CheckoutRequest) : Response<CheckoutResponse>
+
+    @POST("changeOrderItem.php")
+    suspend fun changeOrderItem(@Body request : ChangeOrderItemRequest) : Response<ChangeOrderItemResponse>
 }
