@@ -32,7 +32,7 @@
             <TextView
                 style="@style/Text.Caption14px.Medium"
                 android:textColor="@color/accent"
-                android:id="@+id/textView53"
+                android:id="@+id/txtOrderStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xem chi tiết" />
@@ -115,11 +115,13 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginBottom="16dp"
             android:background="@color/stroke_primary" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

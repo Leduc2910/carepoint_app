@@ -10,6 +10,7 @@ import com.hau.carepointtmdt.network.request.UpdateOrderItemRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
 import com.hau.carepointtmdt.network.response.ChangeOrderItemResponse
 import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
+import com.hau.carepointtmdt.network.response.GetAllOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetOrderItemByOrderIdResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderItemResponse
 import retrofit2.Response
@@ -35,5 +36,8 @@ class OrderItemRepository {
         val request = ChangeOrderItemRequest(order_id, newOrder_id)
         return RetrofitInstance.instance.changeOrderItem(request)
 
+    }
+    suspend fun getAllOrderItem() : Response<GetAllOrderItemResponse> {
+        return RetrofitInstance.instance.getAllOrderItem()
     }
 }

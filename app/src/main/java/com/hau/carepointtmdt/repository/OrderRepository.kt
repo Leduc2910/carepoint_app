@@ -4,9 +4,11 @@ import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.network.RetrofitInstance
 import com.hau.carepointtmdt.network.request.CheckoutRequest
 import com.hau.carepointtmdt.network.request.GetOrderByStatusRequest
+import com.hau.carepointtmdt.network.request.GetOrderDetailByUserIdRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.response.CheckoutResponse
 import com.hau.carepointtmdt.network.response.GetOrderByStatusResponse
+import com.hau.carepointtmdt.network.response.GetOrderDetailByUserIdResponse
 import com.hau.carepointtmdt.network.response.UpdateOrderUserResponse
 import retrofit2.Response
 
@@ -22,5 +24,10 @@ class OrderRepository {
     suspend fun checkout(order_id : Int, address_id : Int, user_id : Int, delivery_id : Int, method_id : Int, totalPrice : Int, status : Int): Response<CheckoutResponse> {
         val request = CheckoutRequest(order_id, address_id, user_id, delivery_id, method_id, totalPrice, status)
         return RetrofitInstance.instance.checkout(request)
+    }
+    suspend fun getOrderDetailByUserId(userId: Int): Response<GetOrderDetailByUserIdResponse> {
+        val request = GetOrderDetailByUserIdRequest(userId)
+        return RetrofitInstance.instance.getOrderDetailByUserId(request)
+
     }
 }

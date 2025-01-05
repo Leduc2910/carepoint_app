@@ -16,6 +16,7 @@ import com.hau.carepointtmdt.network.request.UpdateOrderItemRequest
 import com.hau.carepointtmdt.network.request.UpdateInfoUserRequest
 import com.hau.carepointtmdt.network.request.UpdateOrderUserRequest
 import com.hau.carepointtmdt.network.request.CreateAddressRequest
+import com.hau.carepointtmdt.network.request.GetOrderDetailByUserIdRequest
 import com.hau.carepointtmdt.network.request.UpdateAddressRequest
 import com.hau.carepointtmdt.network.request.UpdateQuantityMedicineRequest
 import com.hau.carepointtmdt.network.response.AddToCartResponse
@@ -26,11 +27,13 @@ import com.hau.carepointtmdt.network.response.CreateAddressResponse
 import com.hau.carepointtmdt.network.response.DeleteOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetAddressByUserIdResponse
 import com.hau.carepointtmdt.network.response.GetAllCatalogueResponse
+import com.hau.carepointtmdt.network.response.GetAllOrderItemResponse
 import com.hau.carepointtmdt.network.response.GetAllPaymentMethodResponse
 import com.hau.carepointtmdt.network.response.GetDeliveryResponse
 import com.hau.carepointtmdt.network.response.GetMedicineByIdResponse
 import com.hau.carepointtmdt.network.response.GetMedicineResponse
 import com.hau.carepointtmdt.network.response.GetOrderByStatusResponse
+import com.hau.carepointtmdt.network.response.GetOrderDetailByUserIdResponse
 import com.hau.carepointtmdt.network.response.GetOrderItemByOrderIdResponse
 import com.hau.carepointtmdt.network.response.GetProductByCatalogueIdResponse
 import com.hau.carepointtmdt.network.response.LoginResponse
@@ -111,4 +114,10 @@ interface ApiService {
 
     @POST("updateQuantityMedicine.php")
     suspend fun updateQuantityMed(@Body request: UpdateQuantityMedicineRequest) : Response<UpdateQuantityMedicineResponse>
+
+    @POST("getOrderDetailByUserId.php")
+    suspend fun getOrderDetailByUserId(@Body request : GetOrderDetailByUserIdRequest) : Response<GetOrderDetailByUserIdResponse>
+
+    @GET("getAllOrderItem.php")
+    suspend fun getAllOrderItem() : Response<GetAllOrderItemResponse>
 }

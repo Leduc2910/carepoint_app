@@ -129,3 +129,14 @@ sealed class UpdateQuantityMedState {
     data class Success(val message: String) : UpdateQuantityMedState()
     data class Error(val message: String) : UpdateQuantityMedState()
 }
+sealed class GetOrderDetailByUserIdState {
+    object Loading : GetOrderDetailByUserIdState()
+    data class Success(val orderDetailLst: List<Order_Detail>) : GetOrderDetailByUserIdState()
+    data class Error(val message: String) : GetOrderDetailByUserIdState()
+}
+sealed class GetAllOrderItemState {
+    object Loading : GetAllOrderItemState()
+    data class Success(val orderItemLst: List<Order_Item>) : GetAllOrderItemState()
+    data class Error(val message: String) : GetAllOrderItemState()
+
+}

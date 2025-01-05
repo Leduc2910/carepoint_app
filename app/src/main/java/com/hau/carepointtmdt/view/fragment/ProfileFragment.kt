@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.hau.carepointtmdt.databinding.FragmentProfileBinding
 import com.hau.carepointtmdt.model.User
 import com.hau.carepointtmdt.validation.SharedPreferencesManager
+import com.hau.carepointtmdt.view.activity.ActivityPurchaseOrder
 import com.hau.carepointtmdt.view.activity.ChangePassActivity
 import com.hau.carepointtmdt.view.activity.EditInformationActivity
 import com.hau.carepointtmdt.view.activity.LoginActivity
@@ -60,7 +61,7 @@ class ProfileFragment : Fragment() {
         })
 
         binding.btnGoToOrders.setOnClickListener(View.OnClickListener {
-            val purchaseOrderActivit = Intent(requireContext(), com.hau.carepointtmdt.view.activity.ActivityPurchaseOrder::class.java)
+            val purchaseOrderActivit = Intent(requireContext(), ActivityPurchaseOrder::class.java)
             startActivity(purchaseOrderActivit)
         })
     }

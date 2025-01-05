@@ -46,6 +46,7 @@ class CheckOutViewModel : ViewModel() {
 
     private val _checkoutState = MutableLiveData<CheckoutState>()
     val checkoutState: LiveData<CheckoutState> = _checkoutState
+
     private val _updateOrderUser = MutableLiveData<UpdateOrderUserState>()
     val updateOrderUser: LiveData<UpdateOrderUserState> = _updateOrderUser
 

@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/btnBackToProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="-1"
@@ -59,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_magnifying"
+                    android:alpha="0"
                     app:tint="@color/text_invert" />
             </LinearLayout>
 

@@ -184,7 +184,6 @@ class HomeFragment : Fragment() {
                         override fun onTabSelected(tab: TabLayout.Tab?) {
                             val catalogueId = tab?.tag as? Int
                             if (catalogueId != null) {
-                                Log.d("CatalogueID", catalogueId.toString())
                                 homeViewModel.getProductByCatalogueId(catalogueId)
                             }
                         }
@@ -265,9 +264,7 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
     }
-
 
     private fun dataInitialize() {
 
