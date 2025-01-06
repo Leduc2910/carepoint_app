@@ -48,6 +48,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
+    implementation(fileTree(mapOf(
+        "dir" to "C:\\Users\\mihdu\\Desktop\\PT ung dung thuong mai\\Nhom 2-21CDP2-Carepoint\\library",
+        "include" to listOf("*.aar", "*.jar"),
+    )))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,6 +70,10 @@ dependencies {
 
     // picasso
     implementation(libs.picasso)
+
+    // zalo pay
+    implementation(libs.okhttp)
+    implementation(libs.commons.codec)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)

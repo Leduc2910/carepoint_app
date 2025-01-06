@@ -3,7 +3,8 @@ package com.hau.carepointtmdt.view.activity
 import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
-import android.os.Debug
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -12,7 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.google.gson.Gson
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityCheckoutBinding
 import com.hau.carepointtmdt.model.Address
@@ -40,13 +41,16 @@ import com.hau.carepointtmdt.viewmodel.GetOrderByStatusState
 import com.hau.carepointtmdt.viewmodel.GetOrderItemByOrderIdState
 import com.hau.carepointtmdt.viewmodel.GetPaymentMethodState
 import com.hau.carepointtmdt.viewmodel.UpdateAddressState
-import com.hau.carepointtmdt.viewmodel.UpdateOrderItemState
 import com.hau.carepointtmdt.viewmodel.UpdateOrderUserState
 import com.hau.carepointtmdt.viewmodel.UpdateQuantityMedState
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPaySDK
+
 
 class CheckoutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckoutBinding
     lateinit var sharedPreferencesManager: SharedPreferencesManager
+    val gson = Gson()
 
     private val checkoutViewModel: CheckOutViewModel by viewModels()
 
@@ -73,6 +77,12 @@ class CheckoutActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        // ZaloPay SDK Init
+        ZaloPaySDK.init(2554, Environment.SANDBOX)
 
         binding.edtAddress.setOnFocusChangeListener(View.OnFocusChangeListener { view, b ->
             if (!b) {
@@ -240,15 +250,20 @@ class CheckoutActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            checkoutViewModel.checkout(
-                order_user.order_id,
-                selectedAddress!!.address_id,
-                currentUser.user_id,
-                selectedDelivery!!.delivery_id,
-                selectedPaymentMethod!!.method_id,
-                (order_user.totalPrice + selectedDelivery!!.delivery_price),
-                1
-            )
+
+            if (selectedPaymentMethod!!.method_id == 1) {
+                checkoutViewModel.checkout(
+                    order_user.order_id,
+                    selectedAddress!!.address_id,
+                    currentUser.user_id,
+                    selectedDelivery!!.delivery_id,
+                    selectedPaymentMethod!!.method_id,
+                    (order_user.totalPrice + selectedDelivery!!.delivery_price),
+                    1
+                )
+            } else if (selectedPaymentMethod!!.method_id == 2) {
+
+            }
         }
         binding.btnBuyMore.setOnClickListener {
             finish()
@@ -603,10 +618,11 @@ class CheckoutActivity : AppCompatActivity() {
                         checkoutViewModel.updateQuantityMed(orderItem.medicine_id, orderItem.quantity)
                     }
 
-                    val order_detail = state.order_detail
+                    val jSonOrderDetail = gson.toJson(state.order_detail)
                     val intent = Intent(this, OrderSuccessActivity::class.java)
-                    intent.putExtra("orderDetail_id", order_detail.orderDetail_id)
+                    intent.putExtra("orderDetail", jSonOrderDetail)
                     startActivity(intent)
+
                     Log.d("Checkout", state.order_detail.toString())
                 }
             }
@@ -707,5 +723,8 @@ class CheckoutActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
+    }
 }

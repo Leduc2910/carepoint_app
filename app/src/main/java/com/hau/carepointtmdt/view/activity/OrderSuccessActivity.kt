@@ -10,14 +10,13 @@ import com.hau.carepointtmdt.databinding.ActivityOrderSuccessBinding
 class OrderSuccessActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderSuccessBinding
 
-    private var orderDetail_id: Int? = null
+    private lateinit var jsonOrderDetail: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityOrderSuccessBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        orderDetail_id = intent.getIntExtra("orderDetail_id", -1)
-        Log.d("order_detail_id", orderDetail_id.toString())
+        jsonOrderDetail = intent.getStringExtra("orderDetail").toString()
 
         binding.btnHome.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -25,7 +24,10 @@ class OrderSuccessActivity : AppCompatActivity() {
             finish()
         }
         binding.btnDetialOrder.setOnClickListener {
-
+            val intent = Intent(this, OrderDetailActivity::class.java)
+            intent.putExtra("orderDetail", jsonOrderDetail)
+            startActivity(intent)
+            finish()
         }
     }
 }

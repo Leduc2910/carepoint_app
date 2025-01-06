@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
-import com.hau.carepointtmdt.model.Order
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.validation.CustomVerticalDecoration
 import com.hau.carepointtmdt.databinding.ActivityPurchaseOrderBinding
@@ -22,7 +21,6 @@ import com.hau.carepointtmdt.view.adapter.PurchaseOrderRV
 import com.hau.carepointtmdt.viewmodel.GetAllOrderItemState
 import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.GetOrderDetailByUserIdState
-import com.hau.carepointtmdt.viewmodel.GetOrderItemByOrderIdState
 import com.hau.carepointtmdt.viewmodel.PurchaseOrderViewModel
 
 class ActivityPurchaseOrder : AppCompatActivity() {
@@ -179,7 +177,6 @@ class ActivityPurchaseOrder : AppCompatActivity() {
             else -> orderDetailLst
         }
 
-        // Cập nhật RecyclerView
         purchaseOrderRV.updateOrderList(filteredOrderDetailLst)
     }
 }

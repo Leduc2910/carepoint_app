@@ -22,11 +22,15 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.OrderDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.OrderSuccessActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.CheckoutActivity"
             android:exported="false"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".view.activity.CartActivity"

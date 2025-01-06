@@ -1,15 +1,17 @@
 package com.hau.carepointtmdt.view.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hau.carepointtmdt.model.Order
+import com.google.gson.Gson
 import com.hau.carepointtmdt.databinding.LayoutOrderBinding
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order_Detail
 import com.hau.carepointtmdt.model.Order_Item
+import com.hau.carepointtmdt.view.activity.OrderDetailActivity
 import com.squareup.picasso.Picasso
 
 class PurchaseOrderRV(
@@ -18,6 +20,8 @@ class PurchaseOrderRV(
     private val orderItemLst: List<Order_Item>,
     private var orderDetailLst: List<Order_Detail>
 ) : RecyclerView.Adapter<PurchaseOrderRV.PurchaseOrderViewHolder>() {
+
+    val gson = Gson()
 
     inner class PurchaseOrderViewHolder(val binding: LayoutOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -30,6 +34,7 @@ class PurchaseOrderRV(
         val txtOrderQuantity = binding.txtOrderQuantity
         val imgOrderProduct = binding.imgOrderProduct
         val txtOrderStatus = binding.txtOrderStatus
+        val goToOrderDetail = binding.GoToOrderDetail
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PurchaseOrderViewHolder {
@@ -54,8 +59,7 @@ class PurchaseOrderRV(
         val medicine = medicineLst.find { it.medicine_id == firstOrderItem.medicine_id }
 
         holder.txtProductName.text = medicine!!.medicine_name
-        holder.txtProductPrice.text =
-            DecimalFormat("#,###").format(firstOrderItem.totalPrice) + " đ"
+        holder.txtProductPrice.text = DecimalFormat("#,###").format(firstOrderItem.totalPrice) + " đ"
         holder.txtTotalProduct.text = "x${firstOrderItem.quantity}"
         holder.txtProductUnit.text = "${medicine.medicine_unit}"
         Picasso.get().load(medicine.medicine_img).into(holder.imgOrderProduct)
@@ -64,6 +68,12 @@ class PurchaseOrderRV(
             2 -> "Đang giao hàng"
             3 -> "Thành công"
             else -> ""
+        }
+        holder.goToOrderDetail.setOnClickListener {
+            val jSonOrderDetail = gson.toJson(orderDetail)
+            val intent = Intent(mContext, OrderDetailActivity::class.java)
+            intent.putExtra("orderDetail", jSonOrderDetail)
+            mContext.startActivity(intent)
         }
     }
 

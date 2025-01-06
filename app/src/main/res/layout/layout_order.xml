@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/GoToOrderDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
