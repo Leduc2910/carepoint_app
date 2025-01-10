@@ -66,9 +66,10 @@ class ActivityPurchaseOrder : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
                     0 -> filterOrdersByStatus("Tất cả")
-                    1 -> filterOrdersByStatus("Chờ lấy hàng")
-                    2 -> filterOrdersByStatus("Đang giao hàng")
-                    3 -> filterOrdersByStatus("Giao thành công")
+                    1  -> filterOrdersByStatus("Chờ xác nhận")
+                    2 -> filterOrdersByStatus("Chờ lấy hàng")
+                    3 -> filterOrdersByStatus("Đang giao hàng")
+                    4 -> filterOrdersByStatus("Đã giao")
                 }
             }
 
@@ -154,7 +155,7 @@ class ActivityPurchaseOrder : AppCompatActivity() {
     }
 
     private fun addTabsToTabLayout() {
-        val tabTitles = listOf("Tất cả", "Chờ lấy hàng", "Đang giao hàng", "Giao thành công")
+        val tabTitles = listOf("Tất cả","Chờ xác nhận", "Chờ lấy hàng", "Đang giao hàng", "Đã giao")
         for (title in tabTitles) {
             val tab = binding.tblOrderStatus.newTab()
             tab.text = title
@@ -171,10 +172,11 @@ class ActivityPurchaseOrder : AppCompatActivity() {
     private fun filterOrdersByStatus(status: String) {
         val filteredOrderDetailLst = when (status) {
             "Tất cả" -> orderDetailLst?.sortedByDescending { it.orderDetail_id }
-            "Chờ lấy hàng" -> orderDetailLst?.filter { it.status == 1 }?.sortedByDescending { it.orderDetail_id }
-            "Đang giao hàng" -> orderDetailLst?.filter { it.status == 2 }?.sortedByDescending { it.orderDetail_id }
-            "Giao thành công" -> orderDetailLst?.filter { it.status == 3 }?.sortedByDescending { it.orderDetail_id }
-            else -> orderDetailLst
+            "Chờ xác nhận" -> orderDetailLst?.filter { it.status == 1 || it.status == 2 }?.sortedByDescending { it.orderDetail_id }
+            "Chờ lấy hàng" -> orderDetailLst?.filter { it.status == 3 }?.sortedByDescending { it.orderDetail_id }
+            "Đang giao hàng" -> orderDetailLst?.filter { it.status == 4 }?.sortedByDescending { it.orderDetail_id }
+            "Đã giao" -> orderDetailLst?.filter { it.status == 5 }?.sortedByDescending { it.orderDetail_id }
+            else -> orderDetailLst?.sortedByDescending { it.orderDetail_id }
         }
 
         purchaseOrderRV.updateOrderList(filteredOrderDetailLst)

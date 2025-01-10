@@ -1,5 +1,6 @@
 package com.hau.carepointtmdt.view.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.icu.text.DecimalFormat
@@ -11,6 +12,7 @@ import com.hau.carepointtmdt.databinding.LayoutOrderBinding
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order_Detail
 import com.hau.carepointtmdt.model.Order_Item
+import com.hau.carepointtmdt.view.activity.ActivityPurchaseOrder
 import com.hau.carepointtmdt.view.activity.OrderDetailActivity
 import com.squareup.picasso.Picasso
 
@@ -64,9 +66,11 @@ class PurchaseOrderRV(
         holder.txtProductUnit.text = "${medicine.medicine_unit}"
         Picasso.get().load(medicine.medicine_img).into(holder.imgOrderProduct)
         holder.txtOrderStatus.text = when (orderDetail.status) {
-            1 -> "Chờ lấy hàng"
-            2 -> "Đang giao hàng"
-            3 -> "Thành công"
+            1 -> "Chờ xác nhận"
+            2 -> "Chờ thanh toán"
+            3 -> "Chờ lấy hàng"
+            4 -> "Đang giao hàng"
+            5 -> "Đã giao"
             else -> ""
         }
         holder.goToOrderDetail.setOnClickListener {
@@ -74,6 +78,9 @@ class PurchaseOrderRV(
             val intent = Intent(mContext, OrderDetailActivity::class.java)
             intent.putExtra("orderDetail", jSonOrderDetail)
             mContext.startActivity(intent)
+            if (mContext is ActivityPurchaseOrder) {
+                (mContext as ActivityPurchaseOrder).finish()
+            }
         }
     }
 

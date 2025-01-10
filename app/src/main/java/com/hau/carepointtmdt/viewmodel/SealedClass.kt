@@ -138,5 +138,10 @@ sealed class GetAllOrderItemState {
     object Loading : GetAllOrderItemState()
     data class Success(val orderItemLst: List<Order_Item>) : GetAllOrderItemState()
     data class Error(val message: String) : GetAllOrderItemState()
+}
+sealed class UpdateOrderDetailState {
+    object Loading : UpdateOrderDetailState()
+    data class Success(val order_detail : Order_Detail) : UpdateOrderDetailState()
+    data class Error(val message: String) : UpdateOrderDetailState()
 
 }

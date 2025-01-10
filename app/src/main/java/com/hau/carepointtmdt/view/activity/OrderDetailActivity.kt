@@ -1,8 +1,13 @@
 package com.hau.carepointtmdt.view.activity
 
+import android.content.Intent
 import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +19,7 @@ import com.google.gson.reflect.TypeToken
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityOrderDetailBinding
 import com.hau.carepointtmdt.model.Address
+import com.hau.carepointtmdt.model.CreateOrder
 import com.hau.carepointtmdt.model.Delivery
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order_Detail
@@ -29,7 +35,12 @@ import com.hau.carepointtmdt.viewmodel.GetMedicineState
 import com.hau.carepointtmdt.viewmodel.GetOrderItemByOrderIdState
 import com.hau.carepointtmdt.viewmodel.GetPaymentMethodState
 import com.hau.carepointtmdt.viewmodel.OrderDetailViewModel
+import com.hau.carepointtmdt.viewmodel.UpdateOrderDetailState
 import com.squareup.picasso.Picasso
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPayError
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 
 class OrderDetailActivity : AppCompatActivity() {
 
@@ -58,6 +69,11 @@ class OrderDetailActivity : AppCompatActivity() {
         binding = ActivityOrderDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        ZaloPaySDK.init(2554, Environment.SANDBOX)
+
         sharedPreferencesManager = SharedPreferencesManager(this)
         currentUser = sharedPreferencesManager.getUser()!!
 
@@ -71,20 +87,93 @@ class OrderDetailActivity : AppCompatActivity() {
         paymentMethodObservesr()
         medicineObservers()
         orderItemOberservers()
+        updateOrderDetailObservers()
         orderDetailViewModel.getAddressByUserId(currentUser.user_id)
         orderDetailViewModel.getDelivery()
         orderDetailViewModel.getPaymentMethod()
         orderDetailViewModel.getAllMedicine()
 
         binding.btnBack.setOnClickListener {
+            val intent = Intent(this, ActivityPurchaseOrder::class.java)
+            startActivity(intent)
             finish()
         }
 
-        binding.txtOrderDetailStatus.text  = when (orderDetail.status) {
-            1 -> "Đơn hàng đang chờ giao cho đơn vị vận chuyển."
-            2 -> "Đơn hàng đang trên đường giao đến bạn."
-            3-> "Đơn hàng giao thành công."
+        binding.txtOrderDetailStatus.text = when (orderDetail.status) {
+            1 -> "Đang chờ người bán xác nhận."
+            2 -> "Vui lòng hoàn tất thanh toán."
+            3 -> "Đơn hàng đang chờ giao cho đơn vị vận chuyển."
+            4 -> "Đơn hàng đang trên đường giao đến bạn."
+            5 -> "Đơn hàng giao thành công."
             else -> ""
+        }
+
+        if (orderDetail.status == 2) {
+            binding.frameHoverBtn.visibility = View.VISIBLE
+        } else {
+            binding.frameHoverBtn.visibility = View.GONE
+        }
+
+        binding.btnPay.setOnClickListener {
+            try {
+                val orderApi = CreateOrder()
+                val totalPrice = orderDetail.totalPrice
+                val data = orderApi.createOrder(totalPrice.toString())
+
+                val code = data?.getString("return_code")
+                if (code == "1") {
+
+                    val zpTransToken = data.getString("zp_trans_token")
+
+                    ZaloPaySDK.getInstance()
+                        .payOrder(this, zpTransToken, "orderdetail://app", object :
+                            PayOrderListener {
+                            override fun onPaymentSucceeded(
+                                transactionId: String,
+                                transToken: String,
+                                appTransID: String
+                            ) {
+                                orderDetailViewModel.updateOrderDetail(
+                                    orderDetail.orderDetail_id,
+                                    3,
+                                    transToken
+                                )
+                                Log.d("tokkensucess", transToken)
+                            }
+
+                            override fun onPaymentCanceled(
+                                zpTransToken: String,
+                                appTransID: String
+                            ) {
+                                orderDetailViewModel.updateOrderDetail(
+                                    orderDetail.orderDetail_id,
+                                    2,
+                                    zpTransToken
+                                )
+                                Log.d("tokkenfailed", zpTransToken)
+                            }
+
+                            override fun onPaymentError(
+                                zaloPayError: ZaloPayError,
+                                zpTransToken: String,
+                                appTransID: String
+                            ) {
+
+                            }
+                        })
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Thanh toán thất bại, vui lòng thử lại!",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Đã xảy ra lỗi, vui lòng thử lại sau!", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -222,5 +311,34 @@ class OrderDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun updateOrderDetailObservers() {
+        orderDetailViewModel.updateOrderDetailState.observe(this) { state ->
+            when (state) {
+                is UpdateOrderDetailState.Error -> {
+                    Log.d("UpdateOrderDetail Error", state.message)
+                }
+
+                UpdateOrderDetailState.Loading -> {
+
+                }
+
+                is UpdateOrderDetailState.Success -> {
+                    orderDetail = state.order_detail
+                    Log.d("orderDetail", orderDetail.toString())
+                    val jSonOrderDetail = gson.toJson(state.order_detail)
+                    val intent = Intent(this, OrderSuccessActivity::class.java)
+                    intent.putExtra("orderDetail", jSonOrderDetail)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
     }
 }

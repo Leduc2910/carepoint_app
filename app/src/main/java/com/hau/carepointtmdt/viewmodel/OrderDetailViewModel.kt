@@ -8,6 +8,7 @@ import com.hau.carepointtmdt.repository.AddressRepository
 import com.hau.carepointtmdt.repository.DeliveryRepository
 import com.hau.carepointtmdt.repository.MedicineRepository
 import com.hau.carepointtmdt.repository.OrderItemRepository
+import com.hau.carepointtmdt.repository.OrderRepository
 import com.hau.carepointtmdt.repository.PaymentMethodRepository
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,7 @@ class OrderDetailViewModel : ViewModel() {
     private val deliveryRepository = DeliveryRepository()
     private val medicineRepository = MedicineRepository()
     private val orderItemRepository = OrderItemRepository()
+    private val orderRepository = OrderRepository()
     private val paymentMethodRepository = PaymentMethodRepository()
 
     private val _getAddressState = MutableLiveData<GetAddressByUserIdState>()
@@ -33,6 +35,9 @@ class OrderDetailViewModel : ViewModel() {
 
     private val _getPaymentMethod = MutableLiveData<GetPaymentMethodState>()
     val getPaymentMethod: LiveData<GetPaymentMethodState> = _getPaymentMethod
+
+    private val _updateOrderDetailState = MutableLiveData<UpdateOrderDetailState>()
+    val updateOrderDetailState: LiveData<UpdateOrderDetailState> = _updateOrderDetailState
 
     fun getAddressByUserId(user_id: Int) {
         viewModelScope.launch {
@@ -56,6 +61,7 @@ class OrderDetailViewModel : ViewModel() {
             }
         }
     }
+
     fun getDelivery() {
         viewModelScope.launch {
             _getDeliveryState.value = GetDeliveryState.Loading
@@ -79,6 +85,7 @@ class OrderDetailViewModel : ViewModel() {
             }
         }
     }
+
     fun getOrderItemByOrderId(order_id: Int) {
         viewModelScope.launch {
             _getOrderItemState.value = GetOrderItemByOrderIdState.Loading
@@ -106,6 +113,7 @@ class OrderDetailViewModel : ViewModel() {
         }
 
     }
+
     fun getAllMedicine() {
         viewModelScope.launch {
             _getAllMedicine.value = GetMedicineState.Loading
@@ -129,6 +137,7 @@ class OrderDetailViewModel : ViewModel() {
             }
         }
     }
+
     fun getPaymentMethod() {
         viewModelScope.launch {
             _getPaymentMethod.value = GetPaymentMethodState.Loading
@@ -152,5 +161,32 @@ class OrderDetailViewModel : ViewModel() {
                 _getPaymentMethod.value = GetPaymentMethodState.Error(e.message.toString())
             }
         }
+    }
+
+    fun updateOrderDetail(orderDetail_id: Int, status: Int, token: String) {
+        viewModelScope.launch {
+            _updateOrderDetailState.value = UpdateOrderDetailState.Loading
+            try {
+                val response = orderRepository.updateOrderDetail(orderDetail_id, status, token)
+                if (response.isSuccessful && response.body() != null) {
+                    val updateOrderDetailResponse = response.body()!!
+                    if (!updateOrderDetailResponse.result.error) {
+                        _updateOrderDetailState.value =
+                            updateOrderDetailResponse.order_detail?.let {
+                                UpdateOrderDetailState.Success(
+                                    it
+                                )
+                            }
+                    } else {
+                        _updateOrderDetailState.value =
+                            UpdateOrderDetailState.Error(updateOrderDetailResponse.result.message)
+                    }
+                }
+
+            } catch (e: Exception) {
+                _updateOrderDetailState.value = UpdateOrderDetailState.Error(e.message.toString())
+            }
+        }
+
     }
 }

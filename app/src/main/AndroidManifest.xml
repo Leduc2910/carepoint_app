@@ -23,15 +23,38 @@
         tools:targetApi="31">
         <activity
             android:name=".view.activity.OrderDetailActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="orderdetail" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.OrderSuccessActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.CheckoutActivity"
-            android:exported="false"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="carepoint" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.CartActivity"
             android:exported="false" />

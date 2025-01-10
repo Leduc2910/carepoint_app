@@ -11,5 +11,6 @@ data class Order_Detail(
     val method_id: Int,
     val totalPrice: Int,
     val status: Int,
-    val create_at: Date
+    val create_at: Date,
+    val token: String
 )

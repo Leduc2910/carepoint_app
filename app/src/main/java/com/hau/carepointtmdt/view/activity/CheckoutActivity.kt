@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.hau.carepointtmdt.R
 import com.hau.carepointtmdt.databinding.ActivityCheckoutBinding
 import com.hau.carepointtmdt.model.Address
+import com.hau.carepointtmdt.model.CreateOrder
 import com.hau.carepointtmdt.model.Delivery
 import com.hau.carepointtmdt.model.Medicine
 import com.hau.carepointtmdt.model.Order
@@ -44,7 +45,9 @@ import com.hau.carepointtmdt.viewmodel.UpdateAddressState
 import com.hau.carepointtmdt.viewmodel.UpdateOrderUserState
 import com.hau.carepointtmdt.viewmodel.UpdateQuantityMedState
 import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPayError
 import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 
 
 class CheckoutActivity : AppCompatActivity() {
@@ -259,10 +262,10 @@ class CheckoutActivity : AppCompatActivity() {
                     selectedDelivery!!.delivery_id,
                     selectedPaymentMethod!!.method_id,
                     (order_user.totalPrice + selectedDelivery!!.delivery_price),
-                    1
+                    1,""
                 )
             } else if (selectedPaymentMethod!!.method_id == 2) {
-
+                paymentByZalopay()
             }
         }
         binding.btnBuyMore.setOnClickListener {
@@ -615,13 +618,17 @@ class CheckoutActivity : AppCompatActivity() {
                     checkoutViewModel.updateOrderUser(order_user)
 
                     orderItemLst?.forEach { orderItem ->
-                        checkoutViewModel.updateQuantityMed(orderItem.medicine_id, orderItem.quantity)
+                        checkoutViewModel.updateQuantityMed(
+                            orderItem.medicine_id,
+                            orderItem.quantity
+                        )
                     }
 
                     val jSonOrderDetail = gson.toJson(state.order_detail)
                     val intent = Intent(this, OrderSuccessActivity::class.java)
                     intent.putExtra("orderDetail", jSonOrderDetail)
                     startActivity(intent)
+                    finish()
 
                     Log.d("Checkout", state.order_detail.toString())
                 }
@@ -690,17 +697,78 @@ class CheckoutActivity : AppCompatActivity() {
 
     fun updateQuantityMedObservers() {
         checkoutViewModel.updateQuantityMedState.observe(this) { state ->
-            when(state) {
+            when (state) {
                 is UpdateQuantityMedState.Error -> {
                     Log.d("Update Quantity Med Error", state.message)
                 }
+
                 is UpdateQuantityMedState.Loading -> {
 
                 }
+
                 is UpdateQuantityMedState.Success -> {
                     Log.d("Update Quantity Med", state.message)
                 }
             }
+        }
+    }
+
+    fun paymentByZalopay() {
+        try {
+            val orderApi = CreateOrder()
+            val totalPrice = (order_user.totalPrice + selectedDelivery!!.delivery_price)
+            val data = orderApi.createOrder(totalPrice.toString())
+
+            val code = data?.getString("return_code")
+            if (code == "1") {
+
+                val zpTransToken = data.getString("zp_trans_token")
+
+                ZaloPaySDK.getInstance().payOrder(this, zpTransToken, "carepoint://app", object :
+                    PayOrderListener {
+                    override fun onPaymentSucceeded(
+                        transactionId: String,
+                        transToken: String,
+                        appTransID: String
+                    ) {
+                        checkoutViewModel.checkout(
+                            order_user.order_id,
+                            selectedAddress!!.address_id,
+                            currentUser.user_id,
+                            selectedDelivery!!.delivery_id,
+                            selectedPaymentMethod!!.method_id,
+                            (order_user.totalPrice + selectedDelivery!!.delivery_price),
+                            3, transToken
+                        )
+                    }
+
+                    override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
+                        checkoutViewModel.checkout(
+                            order_user.order_id,
+                            selectedAddress!!.address_id,
+                            currentUser.user_id,
+                            selectedDelivery!!.delivery_id,
+                            selectedPaymentMethod!!.method_id,
+                            (order_user.totalPrice + selectedDelivery!!.delivery_price),
+                            2, zpTransToken
+                        )
+                    }
+
+                    override fun onPaymentError(
+                        zaloPayError: ZaloPayError,
+                        zpTransToken: String,
+                        appTransID: String
+                    ) {
+
+                    }
+                })
+            } else {
+                Toast.makeText(this, "Thanh toán thất bại, vui lòng thử lại!", Toast.LENGTH_LONG)
+                    .show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Đã xảy ra lỗi, vui lòng thử lại sau!", Toast.LENGTH_LONG).show()
         }
     }
 

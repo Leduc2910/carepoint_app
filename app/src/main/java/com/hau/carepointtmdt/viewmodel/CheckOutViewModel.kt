@@ -245,7 +245,7 @@ class CheckOutViewModel : ViewModel() {
         delivery_id: Int,
         method_id: Int,
         totalPrice: Int,
-        status: Int
+        status: Int, token : String
     ) {
         viewModelScope.launch {
             _checkoutState.value = CheckoutState.Loading
@@ -257,7 +257,7 @@ class CheckOutViewModel : ViewModel() {
                     delivery_id,
                     method_id,
                     totalPrice,
-                    status
+                    status, token
                 )
                 if (response.isSuccessful && response.body() != null) {
                     val checkoutResponse = response.body()!!

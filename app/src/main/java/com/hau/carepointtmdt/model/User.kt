@@ -11,5 +11,6 @@ data class User (
     val gender : Int,
     val birthday : String,
     val role_id: Int,
+    val isActive : Int,
     val create_at : Date
 )

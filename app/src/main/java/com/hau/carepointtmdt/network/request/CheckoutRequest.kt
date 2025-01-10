@@ -8,4 +8,5 @@ data class CheckoutRequest (
     var method_id : Int,
     var totalPrice : Int,
     var status : Int,
+    val token : String
 )

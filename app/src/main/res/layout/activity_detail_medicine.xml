@@ -350,11 +350,15 @@
 
         <Button
             android:id="@+id/btnAddtoCart"
-            style="@style/Text.Caption14px.Medium"
+            style="@style/Text.Caption12px.Medium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/default_secondary_btn"
             android:text="Thêm vào giỏ hàng"
             android:textColor="@color/accent"
