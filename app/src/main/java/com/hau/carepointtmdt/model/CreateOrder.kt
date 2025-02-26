@@ -1,6 +1,5 @@
 package com.hau.carepointtmdt.model
 
-import android.health.connect.datatypes.AppInfo
 import com.hau.carepointtmdt.network.ApiZaloPay
 import com.hau.carepointtmdt.network.HttpProvider.sendPost
 import com.hau.carepointtmdt.zalopay.Helpers

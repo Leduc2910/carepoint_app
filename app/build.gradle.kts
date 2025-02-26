@@ -49,8 +49,8 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(fileTree(mapOf(
-        "dir" to "C:\\Users\\mihdu\\Desktop\\PT ung dung thuong mai\\Nhom 2-21CDP2-Carepoint\\library",
-        "include" to listOf("*.aar", "*.jar"),
+        "dir" to "E:\\Documents\\Subjects\\PT ung dung thuong mai\\Nhom2-Carepoint\\library",
+        "include" to listOf("*.aar", "*.jar")
     )))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

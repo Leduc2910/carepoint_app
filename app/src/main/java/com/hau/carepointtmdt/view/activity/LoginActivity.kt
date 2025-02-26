@@ -111,6 +111,8 @@ class LoginActivity : AppCompatActivity() {
                     binding.txtErrorPhoneLogin.text = state.message
                     binding.txtErrorPassLogin.text = state.message
                 }
+
+                else -> {}
             }
         }
     }
@@ -129,6 +131,8 @@ class LoginActivity : AppCompatActivity() {
                 is GetOrderByStatusState.Error -> {
 
                 }
+
+                else -> {}
             }
         }
     }

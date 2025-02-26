@@ -427,6 +427,7 @@ class CheckoutActivity : AppCompatActivity() {
         checkoutViewModel.createAddressState.observe(this) { state ->
             when (state) {
                 is CreateAddressState.Loading -> {
+
                 }
 
                 is CreateAddressState.Success -> {
@@ -435,7 +436,7 @@ class CheckoutActivity : AppCompatActivity() {
                     binding.frameLstAddress.visibility = View.VISIBLE
 
                     checkoutViewModel.getAddressByUserId(currentUser.user_id)
-                    addressItemRV.notifyDataSetChanged()
+                    // addressItemRV.notifyDataSetChanged()
                 }
 
                 is CreateAddressState.Error -> {
